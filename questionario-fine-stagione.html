@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Athlon Club Roma – Questionario Scuola Nuoto Bambini</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange: #ff5701;
+  --sand: #F5F0E8;
+  --ink: #1a1916;
+  --ink2: #111318;
+  --white: #ffffff;
+  --muted: #6b6760;
+  --border: rgba(255,87,1,0.18);
+  --card-bg: rgba(255,255,255,0.04);
+  --input-bg: rgba(255,255,255,0.06);
+  --input-border: rgba(255,255,255,0.12);
+  --radius: 8px;
+  --radius-lg: 16px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--ink2);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 0%, rgba(255,87,1,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 90% 100%, rgba(255,87,1,0.06) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 20px 60px;
+}
+.header {
+  padding: 40px 0 28px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 32px;
+}
+.logo-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.logo-accent { width: 28px; height: 3px; background: var(--orange); border-radius: 2px; }
+.logo-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+.header h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: clamp(30px, 7vw, 46px);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin-bottom: 10px;
+}
+.header h1 span { color: var(--orange); }
+.header p { font-size: 14px; color: var(--muted); line-height: 1.55; max-width: 540px; margin: 0 auto; }
+
+/* STEPS */
+.steps { display: flex; align-items: center; gap: 6px; margin-bottom: 28px; }
+.step-dot {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--input-border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 13px;
+  color: var(--muted);
+  transition: all 0.3s;
+  flex-shrink: 0;
+  background: transparent;
+}
+.step-dot.active { border-color: var(--orange); background: var(--orange); color: white; box-shadow: 0 0 12px rgba(255,87,1,0.4); }
+.step-dot.done { border-color: var(--orange); background: rgba(255,87,1,0.15); color: var(--orange); }
+.step-line { flex: 1; height: 1px; background: var(--input-border); transition: background 0.3s; }
+.step-line.done { background: var(--orange); }
+
+/* PAGES */
+.page { display: none; }
+.page.active { display: block; }
+
+/* SECTION */
+.section { margin-bottom: 26px; }
+.section-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.section-hint { font-size: 12px; color: var(--muted); margin: -8px 0 12px; line-height: 1.5; }
+
+/* QUESTION */
+.q { margin-bottom: 22px; }
+.q-label { font-size: 14px; font-weight: 500; color: var(--white); margin-bottom: 10px; line-height: 1.45; }
+.q-label .req { color: var(--orange); margin-left: 4px; }
+.q-sub { font-size: 12px; color: var(--muted); margin-top: -4px; margin-bottom: 10px; line-height: 1.5; }
+
+/* CHIPS (radio) */
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip {
+  background: var(--input-bg);
+  border: 1.5px solid var(--input-border);
+  border-radius: 999px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+}
+.chip:hover { border-color: rgba(255,87,1,0.35); }
+.chip.active { border-color: var(--orange); background: rgba(255,87,1,0.1); color: var(--orange); }
+
+/* RATING (1–5) */
+.rating { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.rate-btn {
+  background: var(--input-bg);
+  border: 1.5px solid var(--input-border);
+  border-radius: 10px;
+  width: 48px; height: 48px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--white);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+}
+.rate-btn:hover { border-color: rgba(255,87,1,0.35); }
+.rate-btn.active { border-color: var(--orange); background: rgba(255,87,1,0.12); color: var(--orange); box-shadow: 0 0 12px rgba(255,87,1,0.18); }
+.rate-scale { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 6px; padding: 0 4px; text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* NPS (0–10) */
+.nps { display: grid; grid-template-columns: repeat(11, 1fr); gap: 6px; }
+.nps-btn {
+  background: var(--input-bg);
+  border: 1.5px solid var(--input-border);
+  border-radius: 8px;
+  aspect-ratio: 1;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--white);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  display: flex; align-items: center; justify-content: center;
+}
+.nps-btn:hover { border-color: rgba(255,87,1,0.35); }
+.nps-btn.active { border-color: var(--orange); background: rgba(255,87,1,0.12); color: var(--orange); }
+
+/* CHECKS (multi) */
+.checks { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.check {
+  background: var(--input-bg);
+  border: 1.5px solid var(--input-border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--white);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.check:hover { border-color: rgba(255,87,1,0.35); }
+.check.active { border-color: var(--orange); background: rgba(255,87,1,0.08); }
+.check .box {
+  width: 18px; height: 18px;
+  border-radius: 4px;
+  border: 1.5px solid var(--input-border);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 12px; color: transparent;
+}
+.check.active .box { background: var(--orange); border-color: var(--orange); color: white; }
+
+/* FORM FIELDS */
+.field-group { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.field-group.full { grid-template-columns: 1fr; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.field input, .field textarea, .field select {
+  background: var(--input-bg);
+  border: 1.5px solid var(--input-border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  width: 100%;
+  -webkit-appearance: none;
+}
+.field input::placeholder, .field textarea::placeholder { color: rgba(255,255,255,0.2); }
+.field input:focus, .field textarea:focus, .field select:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(255,87,1,0.12); }
+.field textarea { resize: vertical; min-height: 90px; }
+.field select { background-image: linear-gradient(45deg, transparent 50%, rgba(255,255,255,0.4) 50%), linear-gradient(135deg, rgba(255,255,255,0.4) 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; padding-right: 32px; }
+
+/* BUTTONS */
+.btn-submit {
+  width: 100%;
+  padding: 18px 32px;
+  background: var(--orange);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.btn-submit::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent); }
+.btn-submit:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(255,87,1,0.4); }
+.btn-submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+.btn-back {
+  background: transparent;
+  border: 1.5px solid var(--input-border);
+  color: var(--muted);
+  border-radius: 50px;
+  padding: 14px 28px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-back:hover { border-color: var(--orange); color: var(--white); }
+.btn-row { display: flex; gap: 12px; align-items: center; margin-top: 8px; }
+.btn-row .btn-submit { flex: 1; }
+
+/* ALERT */
+.alert { border-radius: var(--radius); padding: 12px 16px; font-size: 13px; margin-bottom: 18px; display: none; }
+.alert.error { background: rgba(220,38,38,0.1); border: 1px solid rgba(220,38,38,0.3); color: #fca5a5; }
+
+/* SUCCESS */
+.success-panel { text-align: center; padding: 48px 24px; }
+.success-icon { width: 72px; height: 72px; border-radius: 50%; background: rgba(255,87,1,0.12); border: 2px solid var(--orange); display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 32px; }
+.success-panel h2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 32px; text-transform: uppercase; margin-bottom: 12px; }
+.success-panel p { color: var(--muted); font-size: 15px; line-height: 1.6; }
+
+/* SPINNER */
+.spinner { display: inline-block; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.6s linear infinite; vertical-align: middle; margin-right: 8px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 540px) {
+  .field-group { grid-template-columns: 1fr; }
+  .checks { grid-template-columns: 1fr; }
+  .nps { grid-template-columns: repeat(11, 1fr); gap: 4px; }
+  .nps-btn { font-size: 13px; }
+  .rate-btn { width: 44px; height: 44px; font-size: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="logo-line">
+      <div class="logo-accent"></div>
+      <span class="logo-text">Athlon Club Roma</span>
+      <div class="logo-accent"></div>
+    </div>
+    <h1>Questionario <span>Fine Stagione</span></h1>
+    <p>Scuola Nuoto Bambini · Stagione 2025/2026.<br>Il tuo feedback ci aiuta a migliorare il corso per il prossimo anno. Ci vogliono circa 3 minuti.</p>
+  </div>
+
+  <div class="steps" id="stepsBar">
+    <div class="step-dot active" id="s1">1</div>
+    <div class="step-line" id="l1"></div>
+    <div class="step-dot" id="s2">2</div>
+    <div class="step-line" id="l2"></div>
+    <div class="step-dot" id="s3">3</div>
+    <div class="step-line" id="l3"></div>
+    <div class="step-dot" id="s4">4</div>
+    <div class="step-line" id="l4"></div>
+    <div class="step-dot" id="s5">5</div>
+  </div>
+
+  <!-- PAGE 1 — DATI CORSO -->
+  <div class="page active" id="page1">
+    <div class="section">
+      <div class="section-label">Il tuo bambino</div>
+
+      <div class="q">
+        <div class="q-label">Anno di nascita del bambino<span class="req">*</span></div>
+        <div class="chips" data-q="anno_nascita">
+          <button type="button" class="chip" data-v="2014">2014</button>
+          <button type="button" class="chip" data-v="2015">2015</button>
+          <button type="button" class="chip" data-v="2016">2016</button>
+          <button type="button" class="chip" data-v="2017">2017</button>
+          <button type="button" class="chip" data-v="2018">2018</button>
+          <button type="button" class="chip" data-v="2019">2019</button>
+          <button type="button" class="chip" data-v="2020">2020</button>
+          <button type="button" class="chip" data-v="altro">Altro</button>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-label">Da quanti anni frequenta la scuola nuoto Athlon?<span class="req">*</span></div>
+        <div class="chips" data-q="anzianita">
+          <button type="button" class="chip" data-v="primo">Primo anno</button>
+          <button type="button" class="chip" data-v="2">2 anni</button>
+          <button type="button" class="chip" data-v="3">3 anni</button>
+          <button type="button" class="chip" data-v="4+">4+ anni</button>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-label">Livello / gruppo del bambino<span class="req">*</span></div>
+        <div class="q-sub">Se non sei sicuro, scegli quello indicato dall'istruttore o "non so".</div>
+        <div class="chips" data-q="livello">
+          <button type="button" class="chip" data-v="ambientamento">Ambientamento</button>
+          <button type="button" class="chip" data-v="acquaticita">Acquaticità</button>
+          <button type="button" class="chip" data-v="principianti">Principianti</button>
+          <button type="button" class="chip" data-v="intermedi">Intermedi</button>
+          <button type="button" class="chip" data-v="avanzati">Avanzati</button>
+          <button type="button" class="chip" data-v="perfezionamento">Perfezionamento</button>
+          <button type="button" class="chip" data-v="non_so">Non so</button>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-label">Giorni di frequenza<span class="req">*</span></div>
+        <div class="checks" data-q="giorni" data-multi="1">
+          <button type="button" class="check" data-v="lun"><span class="box">&#10003;</span>Lunedì</button>
+          <button type="button" class="check" data-v="mar"><span class="box">&#10003;</span>Martedì</button>
+          <button type="button" class="check" data-v="mer"><span class="box">&#10003;</span>Mercoledì</button>
+          <button type="button" class="check" data-v="gio"><span class="box">&#10003;</span>Giovedì</button>
+          <button type="button" class="check" data-v="ven"><span class="box">&#10003;</span>Venerdì</button>
+          <button type="button" class="check" data-v="sab"><span class="box">&#10003;</span>Sabato</button>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-label">Frequenza settimanale<span class="req">*</span></div>
+        <div class="chips" data-q="frequenza">
+          <button type="button" class="chip" data-v="1">1 volta</button>
+          <button type="button" class="chip" data-v="2">2 volte</button>
+          <button type="button" class="chip" data-v="3+">3 o più</button>
+        </div>
+      </div>
+
+      <div class="field-group full" style="margin-top:8px">
+        <div class="field">
+          <label>Nome dell'istruttore (se ricordato)</label>
+          <input type="text" id="istruttore" placeholder="Es. Marco / Giulia... (facoltativo)" autocomplete="off">
+        </div>
+      </div>
+    </div>
+
+    <div class="alert error" id="alert1"></div>
+    <button class="btn-submit" id="btnP1">Continua &rarr;</button>
+  </div>
+
+  <!-- PAGE 2 — DIDATTICA & PROGRESSI -->
+  <div class="page" id="page2">
+    <div class="section">
+      <div class="section-label">Didattica e progressi</div>
+      <div class="section-hint">Valuta da 1 (per niente d'accordo) a 5 (totalmente d'accordo).</div>
+
+      <div class="q">
+        <div class="q-label">Mio figlio/a ha fatto progressi tecnici visibili durante la stagione<span class="req">*</span></div>
+        <div class="rating" data-q="progressi"></div>
+        <div class="rate-scale"><span>1 · per niente</span><span>5 · totalmente</span></div>
+      </div>
+
+      <div class="q">
+        <div class="q-label">L'istruttore è chiaro nelle spiegazioni e nelle correzioni<span class="req">*</span></div>
+        <div class="rating" data-q="chiarezza"></div>
+      </div>
+
+      <div class="q">
+        <div class="q-label">L'istruttore presta attenzione al singolo bambino<span class="req">*</span></div>
+        <div class="rating" data-q="attenzione"></div>
+      </div>
+
+      <div class="q">
+        <div class="q-label">L'istruttore sa motivare e coinvolgere il gruppo<span class="req">*</span></div>
+        <div class="rating" data-q="motivazione"></div>
+      </div>
+
+      <div class="q">
+        <div class="q-label">Il numero di bambini per corsia è adeguato<span class="req">*</span></div>
+        <div class="rating" data-q="rapporto"></div>
+      </div>
+
+      <div class="q">
+        <div class="q-label">Mio figlio/a si sente sicuro/a in acqua e durante la lezione<span class="req">*</span></div>
+        <div class="rating" data-q="sicurezza"></div>
+      </div>
+
+      <div class="q">
+        <div class="q-label">Mio figlio/a viene volentieri in piscina<span class="req">*</span></div>
+        <div class="rating" data-q="entusiasmo"></div>
+      </div>
+    </div>
+
+    <div class="alert error" id="alert2"></div>
+    <div class="btn-row">
+      <button class="btn-back" id="backP2">&#8592; Indietro</button>
+      <button class="btn-submit" id="btnP2">Continua &rarr;</button>
+    </div>
+  </div>
+
+  <!-- PAGE 3 — ORGANIZZAZIONE & STRUTTURE -->
+  <div class="page" id="page3">
+    <div class="section">
+      <div class="section-label">Organizzazione</div>
+      <div class="q">
+        <div class="q-label">Orari del corso<span class="req">*</span></div>
+        <div class="rating" data-q="orari"></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Puntualità di inizio e fine lezione<span class="req">*</span></div>
+        <div class="rating" data-q="puntualita"></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Comunicazioni con i genitori (avvisi, recuperi, eventi)<span class="req">*</span></div>
+        <div class="rating" data-q="comunicazione"></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Cortesia e disponibilità della segreteria<span class="req">*</span></div>
+        <div class="rating" data-q="segreteria"></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Procedura di iscrizione e pagamenti<span class="req">*</span></div>
+        <div class="rating" data-q="iscrizioni"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Strutture</div>
+      <div class="q">
+        <div class="q-label">Pulizia e ordine della piscina<span class="req">*</span></div>
+        <div class="rating" data-q="pulizia_piscina"></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Spogliatoi e docce<span class="req">*</span></div>
+        <div class="rating" data-q="spogliatoi"></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Temperatura dell'acqua e dell'ambiente<span class="req">*</span></div>
+        <div class="rating" data-q="temperatura"></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Accoglienza e accesso alla struttura<span class="req">*</span></div>
+        <div class="rating" data-q="accoglienza"></div>
+      </div>
+    </div>
+
+    <div class="alert error" id="alert3"></div>
+    <div class="btn-row">
+      <button class="btn-back" id="backP3">&#8592; Indietro</button>
+      <button class="btn-submit" id="btnP3">Continua &rarr;</button>
+    </div>
+  </div>
+
+  <!-- PAGE 4 — SODDISFAZIONE & SUGGERIMENTI -->
+  <div class="page" id="page4">
+    <div class="section">
+      <div class="section-label">Soddisfazione complessiva</div>
+
+      <div class="q">
+        <div class="q-label">Quanto consiglieresti la scuola nuoto Athlon a un amico/parente?<span class="req">*</span></div>
+        <div class="q-sub">Da 0 (mai) a 10 (assolutamente sì).</div>
+        <div class="nps" data-q="nps"></div>
+      </div>
+
+      <div class="q">
+        <div class="q-label">A settembre tornerete a iscrivervi?<span class="req">*</span></div>
+        <div class="chips" data-q="riconferma">
+          <button type="button" class="chip" data-v="si">Sì, sicuramente</button>
+          <button type="button" class="chip" data-v="probabile">Probabilmente sì</button>
+          <button type="button" class="chip" data-v="non_so">Non so ancora</button>
+          <button type="button" class="chip" data-v="probabile_no">Probabilmente no</button>
+          <button type="button" class="chip" data-v="no">No</button>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-label">Vi interesserebbe partecipare a queste attività?</div>
+        <div class="checks" data-q="interessi" data-multi="1">
+          <button type="button" class="check" data-v="centro_estivo"><span class="box">&#10003;</span>Centro estivo</button>
+          <button type="button" class="check" data-v="stage_intensivi"><span class="box">&#10003;</span>Stage intensivi</button>
+          <button type="button" class="check" data-v="pre_agonismo"><span class="box">&#10003;</span>Pre-agonismo</button>
+          <button type="button" class="check" data-v="pallanuoto"><span class="box">&#10003;</span>Pallanuoto bambini</button>
+          <button type="button" class="check" data-v="saggio"><span class="box">&#10003;</span>Saggio / dimostrazioni</button>
+          <button type="button" class="check" data-v="genitori"><span class="box">&#10003;</span>Corsi per genitori</button>
+        </div>
+      </div>
+
+      <div class="field-group full" style="margin-top:8px">
+        <div class="field">
+          <label>Cosa avete apprezzato di più della stagione?</label>
+          <textarea id="apprezzato" placeholder="Racconta in poche righe..."></textarea>
+        </div>
+      </div>
+
+      <div class="field-group full" style="margin-top:12px">
+        <div class="field">
+          <label>Cosa vorreste vedere migliorato?</label>
+          <textarea id="migliorare" placeholder="Suggerimenti, criticità, idee..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert error" id="alert4"></div>
+    <div class="btn-row">
+      <button class="btn-back" id="backP4">&#8592; Indietro</button>
+      <button class="btn-submit" id="btnP4">Continua &rarr;</button>
+    </div>
+  </div>
+
+  <!-- PAGE 5 — CONTATTI & INVIO -->
+  <div class="page" id="page5">
+    <div class="section">
+      <div class="section-label">Contatti (facoltativi)</div>
+      <div class="section-hint">Lasciali se vuoi essere ricontattato/a o ricevere informazioni sulla prossima stagione. Puoi anche inviare il questionario in forma anonima.</div>
+
+      <div class="field-group">
+        <div class="field"><label>Nome bambino</label><input type="text" id="bimbo_nome" placeholder="Marco" autocomplete="off"></div>
+        <div class="field"><label>Cognome bambino</label><input type="text" id="bimbo_cognome" placeholder="Rossi" autocomplete="off"></div>
+      </div>
+      <div class="field-group" style="margin-top:12px">
+        <div class="field"><label>Nome genitore</label><input type="text" id="gen_nome" placeholder="Luca" autocomplete="off"></div>
+        <div class="field"><label>Cognome genitore</label><input type="text" id="gen_cognome" placeholder="Rossi" autocomplete="off"></div>
+      </div>
+      <div class="field-group" style="margin-top:12px">
+        <div class="field"><label>Email</label><input type="email" id="gen_email" placeholder="genitore@email.com"></div>
+        <div class="field"><label>Cellulare</label><input type="tel" id="gen_cel" placeholder="+39 333 1234567"></div>
+      </div>
+
+      <div class="q" style="margin-top:18px">
+        <div class="q-label">Possiamo ricontattarvi per approfondire i vostri feedback?</div>
+        <div class="chips" data-q="ricontatto">
+          <button type="button" class="chip" data-v="si">Sì</button>
+          <button type="button" class="chip" data-v="no">No, grazie</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert error" id="alert5"></div>
+    <div class="btn-row">
+      <button class="btn-back" id="backP5">&#8592; Indietro</button>
+      <button class="btn-submit" id="btnSend">Invia Questionario</button>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="page" id="pageSuccess">
+    <div class="success-panel">
+      <div class="success-icon">&#10003;</div>
+      <h2>Grazie <span style="color:var(--orange)">davvero!</span></h2>
+      <p>Il vostro feedback è stato ricevuto.<br>Ci aiuterà a costruire una scuola nuoto sempre migliore per i nostri bambini.</p>
+      <br>
+      <p style="font-size:12px;color:var(--muted)">Athlon Club Roma &middot; Via Ugo Ojetti 134 &middot; Roma</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  var state = {
+    anno_nascita: null, anzianita: null, livello: null,
+    giorni: [], frequenza: null, istruttore: '',
+    progressi: null, chiarezza: null, attenzione: null, motivazione: null,
+    rapporto: null, sicurezza: null, entusiasmo: null,
+    orari: null, puntualita: null, comunicazione: null, segreteria: null, iscrizioni: null,
+    pulizia_piscina: null, spogliatoi: null, temperatura: null, accoglienza: null,
+    nps: null, riconferma: null, interessi: [],
+    apprezzato: '', migliorare: '',
+    bimbo_nome: '', bimbo_cognome: '',
+    gen_nome: '', gen_cognome: '', gen_email: '', gen_cel: '',
+    ricontatto: null
+  };
+
+  // Build rating widgets (1–5)
+  function buildRating(el, key) {
+    el.innerHTML = '';
+    for (var i = 1; i <= 5; i++) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'rate-btn';
+      b.dataset.v = String(i);
+      b.textContent = i;
+      el.appendChild(b);
+    }
+    el.addEventListener('click', function(e) {
+      var btn = e.target.closest('.rate-btn');
+      if (!btn) return;
+      state[key] = parseInt(btn.dataset.v, 10);
+      el.querySelectorAll('.rate-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+    });
+  }
+  document.querySelectorAll('.rating').forEach(function(el){
+    buildRating(el, el.dataset.q);
+  });
+
+  // Build NPS (0–10)
+  (function buildNps(){
+    var el = document.querySelector('.nps[data-q="nps"]');
+    if (!el) return;
+    for (var i = 0; i <= 10; i++) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'nps-btn';
+      b.dataset.v = String(i);
+      b.textContent = i;
+      el.appendChild(b);
+    }
+    el.addEventListener('click', function(e) {
+      var btn = e.target.closest('.nps-btn');
+      if (!btn) return;
+      state.nps = parseInt(btn.dataset.v, 10);
+      el.querySelectorAll('.nps-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+    });
+  })();
+
+  // Single-choice chips
+  document.querySelectorAll('.chips').forEach(function(group){
+    var key = group.dataset.q;
+    group.addEventListener('click', function(e){
+      var btn = e.target.closest('.chip');
+      if (!btn) return;
+      state[key] = btn.dataset.v;
+      group.querySelectorAll('.chip').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+    });
+  });
+
+  // Multi-choice checks
+  document.querySelectorAll('.checks').forEach(function(group){
+    var key = group.dataset.q;
+    group.addEventListener('click', function(e){
+      var btn = e.target.closest('.check');
+      if (!btn) return;
+      btn.classList.toggle('active');
+      var values = [];
+      group.querySelectorAll('.check.active').forEach(function(b){ values.push(b.dataset.v); });
+      state[key] = values;
+    });
+  });
+
+  // Step navigation helpers
+  function showPage(n){
+    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+    var pg = document.getElementById('page' + n);
+    if (pg) pg.classList.add('active');
+    for (var i = 1; i <= 5; i++) {
+      var dot = document.getElementById('s' + i);
+      var line = document.getElementById('l' + i);
+      if (!dot) continue;
+      dot.classList.remove('active', 'done');
+      if (i < n) { dot.classList.add('done'); dot.textContent = '✓'; }
+      else if (i === n) { dot.classList.add('active'); dot.textContent = i; }
+      else { dot.textContent = i; }
+      if (line) line.classList.toggle('done', i < n);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showAlert(id, msg){
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = msg;
+    el.style.display = 'block';
+    setTimeout(function(){ el.style.display = 'none'; }, 4500);
+  }
+
+  function need(v){ return v === null || v === undefined || v === '' || (Array.isArray(v) && v.length === 0); }
+
+  // Page 1
+  document.getElementById('btnP1').addEventListener('click', function(){
+    state.istruttore = document.getElementById('istruttore').value.trim();
+    if (need(state.anno_nascita)) return showAlert('alert1', 'Indica l\'anno di nascita.');
+    if (need(state.anzianita))    return showAlert('alert1', 'Indica da quanti anni frequenta.');
+    if (need(state.livello))      return showAlert('alert1', 'Seleziona il livello del bambino.');
+    if (need(state.giorni))       return showAlert('alert1', 'Seleziona almeno un giorno di frequenza.');
+    if (need(state.frequenza))    return showAlert('alert1', 'Indica la frequenza settimanale.');
+    showPage(2);
+  });
+
+  document.getElementById('backP2').addEventListener('click', function(){ showPage(1); });
+  document.getElementById('btnP2').addEventListener('click', function(){
+    var keys = ['progressi','chiarezza','attenzione','motivazione','rapporto','sicurezza','entusiasmo'];
+    for (var i = 0; i < keys.length; i++) {
+      if (need(state[keys[i]])) return showAlert('alert2', 'Completa tutte le valutazioni di questa pagina.');
+    }
+    showPage(3);
+  });
+
+  document.getElementById('backP3').addEventListener('click', function(){ showPage(2); });
+  document.getElementById('btnP3').addEventListener('click', function(){
+    var keys = ['orari','puntualita','comunicazione','segreteria','iscrizioni','pulizia_piscina','spogliatoi','temperatura','accoglienza'];
+    for (var i = 0; i < keys.length; i++) {
+      if (need(state[keys[i]])) return showAlert('alert3', 'Completa tutte le valutazioni di questa pagina.');
+    }
+    showPage(4);
+  });
+
+  document.getElementById('backP4').addEventListener('click', function(){ showPage(3); });
+  document.getElementById('btnP4').addEventListener('click', function(){
+    state.apprezzato = document.getElementById('apprezzato').value.trim();
+    state.migliorare = document.getElementById('migliorare').value.trim();
+    if (need(state.nps))        return showAlert('alert4', 'Indica un punteggio da 0 a 10.');
+    if (need(state.riconferma)) return showAlert('alert4', 'Indica se tornerete a iscrivervi.');
+    showPage(5);
+  });
+
+  document.getElementById('backP5').addEventListener('click', function(){ showPage(4); });
+
+  document.getElementById('btnSend').addEventListener('click', function(){
+    state.bimbo_nome   = document.getElementById('bimbo_nome').value.trim();
+    state.bimbo_cognome= document.getElementById('bimbo_cognome').value.trim();
+    state.gen_nome     = document.getElementById('gen_nome').value.trim();
+    state.gen_cognome  = document.getElementById('gen_cognome').value.trim();
+    state.gen_email    = document.getElementById('gen_email').value.trim();
+    state.gen_cel      = document.getElementById('gen_cel').value.trim();
+
+    if (state.gen_email && state.gen_email.indexOf('@') < 0) {
+      return showAlert('alert5', 'Inserisci un\'email valida (oppure lascia vuoto).');
+    }
+
+    var btn = document.getElementById('btnSend');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Invio in corso...';
+
+    var payload = {
+      stagione: '2025/2026',
+      corso: { nome_bambino: state.bimbo_nome, cognome_bambino: state.bimbo_cognome,
+               anno_nascita: state.anno_nascita, anzianita: state.anzianita,
+               livello: state.livello, giorni: state.giorni, frequenza: state.frequenza,
+               istruttore: state.istruttore },
+      didattica: { progressi: state.progressi, chiarezza: state.chiarezza,
+                   attenzione: state.attenzione, motivazione: state.motivazione,
+                   rapporto_corsia: state.rapporto, sicurezza: state.sicurezza,
+                   entusiasmo: state.entusiasmo },
+      organizzazione: { orari: state.orari, puntualita: state.puntualita,
+                        comunicazione: state.comunicazione, segreteria: state.segreteria,
+                        iscrizioni: state.iscrizioni },
+      strutture: { pulizia_piscina: state.pulizia_piscina, spogliatoi: state.spogliatoi,
+                   temperatura: state.temperatura, accoglienza: state.accoglienza },
+      soddisfazione: { nps: state.nps, riconferma: state.riconferma,
+                       interessi: state.interessi,
+                       apprezzato: state.apprezzato, migliorare: state.migliorare },
+      contatti: { nome: state.gen_nome, cognome: state.gen_cognome,
+                  email: state.gen_email, cellulare: state.gen_cel,
+                  ricontatto: state.ricontatto },
+      timestamp: new Date().toISOString(),
+      source: 'questionario-fine-stagione-scuola-nuoto-bambini'
+    };
+
+    fetch('https://automazione.n8ndevelop.it/webhook/questionario-fine-stagione-athlon', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(function(r){
+      if (r.ok || r.status === 200 || r.status === 201 || r.status === 202) {
+        document.getElementById('stepsBar').style.display = 'none';
+        document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+        document.getElementById('pageSuccess').classList.add('active');
+      } else {
+        throw new Error('HTTP ' + r.status);
+      }
+    })
+    .catch(function(){
+      btn.disabled = false;
+      btn.innerHTML = 'Invia Questionario';
+      showAlert('alert5', 'Errore nell\'invio. Riprova o contatta lo staff.');
+    });
+  });
+
+})();
+</script>
+</body>
+</html>
