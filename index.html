@@ -447,10 +447,6 @@ body::before {
         <div class="rating-wrap"><div class="rating" data-q="proc_recuperi" data-na="1"></div></div>
       </div>
       <div class="q">
-        <div class="q-label">La disponibilità di slot per recuperare le lezioni è adeguata<span class="req">*</span></div>
-        <div class="rating-wrap"><div class="rating" data-q="slot_recuperi" data-na="1"></div></div>
-      </div>
-      <div class="q">
         <div class="q-label">La gestione dei cambi di gruppo o orario è efficiente<span class="req">*</span></div>
         <div class="rating-wrap"><div class="rating" data-q="cambi" data-na="1"></div></div>
       </div>
@@ -662,7 +658,7 @@ body::before {
     sez_brevetti: null, evento_brevetti: null,
     dt_usato: null, dt_utilita: null,
 
-    orari: null, puntualita: null, proc_recuperi: null, slot_recuperi: null,
+    orari: null, puntualita: null, proc_recuperi: null,
     cambi: null, comunicazioni: null,
 
     portale_uso: null, app_uso: null, prenotazioni: null, pagamenti: null, nucleo: null,
@@ -818,7 +814,7 @@ body::before {
   });
   document.getElementById('backP3').addEventListener('click', function(){ showPage(2); });
   document.getElementById('btnP3').addEventListener('click', function(){
-    if (!checkAll(['orari','puntualita','proc_recuperi','slot_recuperi','cambi','comunicazioni'], 'alert3')) return;
+    if (!checkAll(['orari','puntualita','proc_recuperi','cambi','comunicazioni'], 'alert3')) return;
     showPage(4);
   });
   document.getElementById('backP4').addEventListener('click', function(){ showPage(3); });
@@ -872,7 +868,6 @@ body::before {
         orari: state.orari,
         puntualita: state.puntualita,
         proc_recuperi: state.proc_recuperi,
-        slot_recuperi: state.slot_recuperi,
         cambi: state.cambi,
         comunicazioni: state.comunicazioni
       },
