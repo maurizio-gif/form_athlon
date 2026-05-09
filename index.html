@@ -10,13 +10,13 @@
   --orange: #ff5701;
   --sand: #F5F0E8;
   --ink: #1a1916;
-  --ink2: #111318;
-  --white: #ffffff;
+  --ink2: #ffffff;
+  --white: #1a1916;
   --muted: #6b6760;
-  --border: rgba(255,87,1,0.18);
-  --card-bg: rgba(255,255,255,0.04);
-  --input-bg: rgba(255,255,255,0.06);
-  --input-border: rgba(255,255,255,0.12);
+  --border: rgba(255,87,1,0.22);
+  --card-bg: rgba(0,0,0,0.03);
+  --input-bg: rgba(0,0,0,0.03);
+  --input-border: rgba(0,0,0,0.14);
   --radius: 8px;
   --radius-lg: 16px;
 }
@@ -33,8 +33,8 @@ body::before {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse 80% 60% at 10% 0%, rgba(255,87,1,0.08) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 90% 100%, rgba(255,87,1,0.06) 0%, transparent 50%);
+    radial-gradient(ellipse 80% 60% at 10% 0%, rgba(255,87,1,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 90% 100%, rgba(255,87,1,0.05) 0%, transparent 50%);
   pointer-events: none;
   z-index: 0;
 }
@@ -238,7 +238,7 @@ body::before {
   width: 100%;
   -webkit-appearance: none;
 }
-.field input::placeholder, .field textarea::placeholder { color: rgba(255,255,255,0.2); }
+.field input::placeholder, .field textarea::placeholder { color: rgba(0,0,0,0.3); }
 .field input:focus, .field textarea:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(255,87,1,0.12); }
 .field textarea { resize: vertical; min-height: 90px; }
 
@@ -283,8 +283,8 @@ body::before {
 
 /* ALERT */
 .alert { border-radius: var(--radius); padding: 12px 16px; font-size: 13px; margin-bottom: 18px; display: none; }
-.alert.error { background: rgba(220,38,38,0.1); border: 1px solid rgba(220,38,38,0.3); color: #fca5a5; }
-.alert.warn { background: rgba(234,179,8,0.08); border: 1px solid rgba(234,179,8,0.25); color: #fde68a; display: block; }
+.alert.error { background: rgba(220,38,38,0.08); border: 1px solid rgba(220,38,38,0.3); color: #b91c1c; }
+.alert.warn { background: rgba(234,179,8,0.1); border: 1px solid rgba(234,179,8,0.35); color: #92400e; display: block; }
 
 /* SUCCESS */
 .success-panel { text-align: center; padding: 48px 24px; }
@@ -579,18 +579,6 @@ body::before {
         </div>
       </div>
 
-      <div class="q">
-        <div class="q-label">A quali altre attività Athlon sareste interessati?</div>
-        <div class="checks" data-q="interessi" data-multi="1">
-          <button type="button" class="check" data-v="intensivi_estivi"><span class="box">&#10003;</span>Corsi intensivi estivi</button>
-          <button type="button" class="check" data-v="pallanuoto"><span class="box">&#10003;</span>Pallanuoto bambini</button>
-          <button type="button" class="check" data-v="pre_agonismo"><span class="box">&#10003;</span>Pre-agonismo / Agonismo</button>
-          <button type="button" class="check" data-v="gare_asi"><span class="box">&#10003;</span>Gare ASI</button>
-          <button type="button" class="check" data-v="stage"><span class="box">&#10003;</span>Stage / open day</button>
-          <button type="button" class="check" data-v="corsi_genitori"><span class="box">&#10003;</span>Corsi per i genitori</button>
-        </div>
-      </div>
-
       <div class="field-group full" style="margin-top:8px">
         <div class="field">
           <label>Cosa avete apprezzato di più</label>
@@ -604,13 +592,6 @@ body::before {
         </div>
       </div>
 
-      <div class="q" style="margin-top:18px">
-        <div class="q-label">Possiamo ricontattarvi per approfondire i feedback?<span class="req">*</span></div>
-        <div class="chips" data-q="ricontatto">
-          <button type="button" class="chip" data-v="si">Sì</button>
-          <button type="button" class="chip" data-v="no">No, grazie</button>
-        </div>
-      </div>
     </div>
 
     <div class="alert error" id="alert6"></div>
@@ -668,8 +649,8 @@ body::before {
 
     desk_cortesia: null, desk_tempi: null, qualita_prezzo: null,
 
-    nps: null, riconferma: null, interessi: [],
-    apprezzato: '', migliorare: '', ricontatto: null
+    nps: null, riconferma: null,
+    apprezzato: '', migliorare: ''
   };
 
   // ── RATING (1–5 + opzionale "Non utilizzato") ─────────
@@ -836,7 +817,6 @@ body::before {
     if (!checkAll(['desk_cortesia','desk_tempi','qualita_prezzo'], 'alert6')) return;
     if (need(state.nps))        return showAlert('alert6', 'Indica un punteggio da 0 a 10.');
     if (need(state.riconferma)) return showAlert('alert6', 'Indica se tornerete a iscrivervi.');
-    if (need(state.ricontatto)) return showAlert('alert6', 'Indica se possiamo ricontattarvi.');
 
     var btn = document.getElementById('btnSend');
     btn.disabled = true;
@@ -895,10 +875,8 @@ body::before {
       soddisfazione: {
         nps: state.nps,
         riconferma: state.riconferma,
-        interessi: state.interessi,
         apprezzato: state.apprezzato,
-        migliorare: state.migliorare,
-        ricontatto: state.ricontatto
+        migliorare: state.migliorare
       },
       timestamp: new Date().toISOString(),
       source: 'questionario-fine-stagione-scuola-nuoto-bambini'
