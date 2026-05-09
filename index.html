@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="it">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Athlon Club Roma – Prenotazione Prove</title>
+<title>Athlon Club Roma – Questionario Scuola Nuoto Bambini</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -42,22 +41,22 @@ body::before {
 .container {
   position: relative;
   z-index: 1;
-  max-width: 680px;
+  max-width: 720px;
   margin: 0 auto;
   padding: 0 20px 60px;
 }
 .header {
-  padding: 40px 0 32px;
+  padding: 40px 0 28px;
   text-align: center;
   border-bottom: 1px solid var(--border);
-  margin-bottom: 36px;
+  margin-bottom: 32px;
 }
 .logo-line {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 .logo-accent { width: 28px; height: 3px; background: var(--orange); border-radius: 2px; }
 .logo-text {
@@ -71,235 +70,241 @@ body::before {
 .header h1 {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 800;
-  font-size: clamp(32px, 8vw, 52px);
+  font-size: clamp(30px, 7vw, 46px);
   line-height: 1;
   text-transform: uppercase;
   letter-spacing: -0.01em;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 .header h1 span { color: var(--orange); }
-.header p { font-size: 14px; color: var(--muted); line-height: 1.5; }
+.header p { font-size: 14px; color: var(--muted); line-height: 1.55; max-width: 540px; margin: 0 auto; }
 
 /* STEPS */
-.steps {
-display: flex;
-align-items: center;
-gap: 6px;
-margin-bottom: 32px;
-}
+.steps { display: flex; align-items: center; gap: 6px; margin-bottom: 28px; }
 .step-dot {
-width: 28px; height: 28px;
-border-radius: 50%;
-border: 2px solid var(–input-border);
-display: flex; align-items: center; justify-content: center;
-font-family: ‘Barlow Condensed’, sans-serif;
-font-weight: 700; font-size: 13px;
-color: var(–muted);
-transition: all 0.3s;
-flex-shrink: 0;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--input-border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 13px;
+  color: var(--muted);
+  transition: all 0.3s;
+  flex-shrink: 0;
+  background: transparent;
 }
-.step-dot.active { border-color: var(–orange); background: var(–orange); color: white; box-shadow: 0 0 12px rgba(255,87,1,0.4); }
-.step-dot.done { border-color: var(–orange); background: rgba(255,87,1,0.15); color: var(–orange); }
-.step-line { flex: 1; height: 1px; background: var(–input-border); transition: background 0.3s; }
-.step-line.done { background: var(–orange); }
+.step-dot.active { border-color: var(--orange); background: var(--orange); color: white; box-shadow: 0 0 12px rgba(255,87,1,0.4); }
+.step-dot.done { border-color: var(--orange); background: rgba(255,87,1,0.15); color: var(--orange); }
+.step-line { flex: 1; height: 1px; background: var(--input-border); transition: background 0.3s; }
+.step-line.done { background: var(--orange); }
 
 /* PAGES */
 .page { display: none; }
 .page.active { display: block; }
 
 /* SECTION */
-.section { margin-bottom: 28px; }
+.section { margin-bottom: 26px; }
 .section-label {
-font-family: ‘Barlow Condensed’, sans-serif;
-font-weight: 700;
-font-size: 13px;
-letter-spacing: 0.18em;
-text-transform: uppercase;
-color: var(–orange);
-margin-bottom: 16px;
-display: flex;
-align-items: center;
-gap: 10px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
-.section-label::after { content: ‘’; flex: 1; height: 1px; background: var(–border); }
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.section-hint { font-size: 12px; color: var(--muted); margin: -8px 0 14px; line-height: 1.5; }
 
-/* SPORT BTNS */
-.sport-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.sport-btn {
-background: var(–card-bg);
-border: 1.5px solid var(–input-border);
-border-radius: var(–radius-lg);
-padding: 20px 16px;
-cursor: pointer;
-transition: all 0.2s;
-text-align: center;
-position: relative;
-overflow: hidden;
-color: var(–white);
-}
-.sport-btn::before {
-content: ‘’;
-position: absolute;
-inset: 0;
-background: linear-gradient(135deg, rgba(255,87,1,0.15), transparent);
-opacity: 0;
-transition: opacity 0.2s;
-}
-.sport-btn:hover::before, .sport-btn.active::before { opacity: 1; }
-.sport-btn.active { border-color: var(–orange); box-shadow: 0 0 0 1px var(–orange), 0 0 24px rgba(255,87,1,0.15); }
-.sport-btn .icon { font-size: 28px; margin-bottom: 8px; display: block; }
-.sport-btn .label { font-family: ‘Barlow Condensed’, sans-serif; font-weight: 700; font-size: 18px; letter-spacing: 0.05em; text-transform: uppercase; display: block; }
-.sport-btn .sub { font-size: 11px; color: var(–muted); margin-top: 2px; display: block; }
+/* QUESTION */
+.q { margin-bottom: 22px; }
+.q-label { font-size: 14px; font-weight: 500; color: var(--white); margin-bottom: 10px; line-height: 1.45; }
+.q-label .req { color: var(--orange); margin-left: 4px; }
+.q-sub { font-size: 12px; color: var(--muted); margin-top: -4px; margin-bottom: 10px; line-height: 1.5; }
 
-/* CAT BTNS */
-.cat-options { display: flex; flex-direction: column; gap: 8px; }
-.cat-btn {
-background: var(–input-bg);
-border: 1.5px solid var(–input-border);
-border-radius: var(–radius);
-padding: 14px 18px;
-cursor: pointer;
-transition: all 0.2s;
-text-align: left;
-color: var(–white);
-display: flex;
-align-items: center;
-justify-content: space-between;
+/* CHIPS (radio) */
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip {
+  background: var(--input-bg);
+  border: 1.5px solid var(--input-border);
+  border-radius: 999px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
 }
-.cat-btn:hover { border-color: rgba(255,87,1,0.35); }
-.cat-btn.active { border-color: var(–orange); background: rgba(255,87,1,0.08); }
-.cat-btn .cat-name { font-family: ‘Barlow Condensed’, sans-serif; font-weight: 700; font-size: 16px; letter-spacing: 0.04em; text-transform: uppercase; }
-.cat-btn .cat-anni { font-size: 12px; color: var(–muted); margin-top: 1px; }
-.cat-btn .cat-badge { font-size: 11px; background: rgba(255,87,1,0.15); color: var(–orange); padding: 3px 8px; border-radius: 20px; font-weight: 600; letter-spacing: 0.05em; white-space: nowrap; }
+.chip:hover { border-color: rgba(255,87,1,0.35); }
+.chip.active { border-color: var(--orange); background: rgba(255,87,1,0.1); color: var(--orange); }
 
-/* DATE GRID */
-.date-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
-.date-btn {
-background: var(–input-bg);
-border: 1.5px solid var(–input-border);
-border-radius: var(–radius);
-padding: 12px 8px;
-cursor: pointer;
-transition: all 0.2s;
-text-align: center;
-color: var(–white);
+/* RATING (1–5) */
+.rating-wrap { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.rating { display: flex; gap: 8px; flex-wrap: wrap; }
+.rate-btn {
+  background: var(--input-bg);
+  border: 1.5px solid var(--input-border);
+  border-radius: 10px;
+  width: 48px; height: 48px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--white);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 18px;
 }
-.date-btn:hover { border-color: rgba(255,87,1,0.35); }
-.date-btn.active { border-color: var(–orange); background: rgba(255,87,1,0.1); box-shadow: 0 0 12px rgba(255,87,1,0.12); }
-.date-btn .d-day { font-family: ‘Barlow Condensed’, sans-serif; font-weight: 800; font-size: 22px; line-height: 1; }
-.date-btn .d-month { font-size: 11px; color: var(–muted); text-transform: uppercase; letter-spacing: 0.08em; }
-.date-btn .d-wd { font-size: 10px; color: var(–muted); text-transform: uppercase; margin-top: 2px; }
-.date-btn.active .d-month, .date-btn.active .d-wd { color: rgba(255,87,1,0.7); }
+.rate-btn:hover { border-color: rgba(255,87,1,0.35); }
+.rate-btn.active { border-color: var(--orange); background: rgba(255,87,1,0.12); color: var(--orange); box-shadow: 0 0 12px rgba(255,87,1,0.18); }
+.na-btn {
+  background: transparent;
+  border: 1.5px dashed var(--input-border);
+  border-radius: 10px;
+  padding: 0 14px;
+  height: 48px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--muted);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+}
+.na-btn:hover { border-color: rgba(255,87,1,0.35); color: var(--white); }
+.na-btn.active { border-color: var(--orange); color: var(--orange); background: rgba(255,87,1,0.06); border-style: solid; }
+.rate-scale { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 6px; padding: 0 4px; text-transform: uppercase; letter-spacing: 0.08em; }
 
-/* ORA BTNS */
-.orario-options { display: flex; gap: 10px; flex-wrap: wrap; }
-.ora-btn {
-background: var(–input-bg);
-border: 1.5px solid var(–input-border);
-border-radius: var(–radius);
-padding: 10px 20px;
-cursor: pointer;
-transition: all 0.2s;
-color: var(–white);
-font-family: ‘Barlow Condensed’, sans-serif;
-font-weight: 700;
-font-size: 17px;
-letter-spacing: 0.05em;
+/* NPS (0–10) */
+.nps { display: grid; grid-template-columns: repeat(11, 1fr); gap: 6px; }
+.nps-btn {
+  background: var(--input-bg);
+  border: 1.5px solid var(--input-border);
+  border-radius: 8px;
+  aspect-ratio: 1;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--white);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  display: flex; align-items: center; justify-content: center;
 }
-.ora-btn:hover { border-color: rgba(255,87,1,0.35); }
-.ora-btn.active { border-color: var(–orange); background: rgba(255,87,1,0.1); color: var(–orange); }
-.ora-fixed-label { font-size: 12px; color: var(–muted); align-self: center; margin-left: 4px; }
+.nps-btn:hover { border-color: rgba(255,87,1,0.35); }
+.nps-btn.active { border-color: var(--orange); background: rgba(255,87,1,0.12); color: var(--orange); }
+
+/* CHECKS (multi) */
+.checks { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.check {
+  background: var(--input-bg);
+  border: 1.5px solid var(--input-border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--white);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.check:hover { border-color: rgba(255,87,1,0.35); }
+.check.active { border-color: var(--orange); background: rgba(255,87,1,0.08); }
+.check .box {
+  width: 18px; height: 18px;
+  border-radius: 4px;
+  border: 1.5px solid var(--input-border);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 12px; color: transparent;
+}
+.check.active .box { background: var(--orange); border-color: var(--orange); color: white; }
 
 /* FORM FIELDS */
 .field-group { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .field-group.full { grid-template-columns: 1fr; }
 .field { display: flex; flex-direction: column; gap: 6px; }
-.field label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(–muted); }
+.field label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
 .field input, .field textarea {
-background: var(–input-bg);
-border: 1.5px solid var(–input-border);
-border-radius: var(–radius);
-padding: 12px 14px;
-color: var(–white);
-font-family: ‘DM Sans’, sans-serif;
-font-size: 15px;
-transition: border-color 0.2s, box-shadow 0.2s;
-outline: none;
-width: 100%;
--webkit-appearance: none;
+  background: var(--input-bg);
+  border: 1.5px solid var(--input-border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  width: 100%;
+  -webkit-appearance: none;
 }
 .field input::placeholder, .field textarea::placeholder { color: rgba(255,255,255,0.2); }
-.field input:focus, .field textarea:focus { border-color: var(–orange); box-shadow: 0 0 0 3px rgba(255,87,1,0.12); }
+.field input:focus, .field textarea:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(255,87,1,0.12); }
 .field textarea { resize: vertical; min-height: 90px; }
 
 /* BUTTONS */
 .btn-submit {
-width: 100%;
-padding: 18px 32px;
-background: var(–orange);
-color: white;
-border: none;
-border-radius: 50px;
-font-family: ‘Barlow Condensed’, sans-serif;
-font-weight: 700;
-font-size: 18px;
-letter-spacing: 0.12em;
-text-transform: uppercase;
-cursor: pointer;
-transition: all 0.2s;
-position: relative;
-overflow: hidden;
+  width: 100%;
+  padding: 18px 32px;
+  background: var(--orange);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
 }
-.btn-submit::before { content: ‘’; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent); }
+.btn-submit::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent); }
 .btn-submit:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(255,87,1,0.4); }
 .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
 .btn-back {
-background: transparent;
-border: 1.5px solid var(–input-border);
-color: var(–muted);
-border-radius: 50px;
-padding: 14px 28px;
-font-family: ‘Barlow Condensed’, sans-serif;
-font-weight: 600;
-font-size: 15px;
-letter-spacing: 0.1em;
-text-transform: uppercase;
-cursor: pointer;
-transition: all 0.2s;
+  background: transparent;
+  border: 1.5px solid var(--input-border);
+  color: var(--muted);
+  border-radius: 50px;
+  padding: 14px 28px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
 }
-.btn-back:hover { border-color: var(–orange); color: var(–white); }
+.btn-back:hover { border-color: var(--orange); color: var(--white); }
 .btn-row { display: flex; gap: 12px; align-items: center; margin-top: 8px; }
 .btn-row .btn-submit { flex: 1; }
 
 /* ALERT */
-.alert { border-radius: var(–radius); padding: 12px 16px; font-size: 13px; margin-bottom: 20px; display: none; }
+.alert { border-radius: var(--radius); padding: 12px 16px; font-size: 13px; margin-bottom: 18px; display: none; }
 .alert.error { background: rgba(220,38,38,0.1); border: 1px solid rgba(220,38,38,0.3); color: #fca5a5; }
-
-/* RIEPILOGO */
-.riepilogo-card { background: var(–card-bg); border: 1px solid var(–border); border-radius: var(–radius-lg); padding: 20px; margin-bottom: 24px; }
-.riepilogo-card h3 { font-family: ‘Barlow Condensed’, sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(–orange); margin-bottom: 12px; }
-.riepilogo-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 13px; }
-.riepilogo-row:last-child { border-bottom: none; }
-.riepilogo-row .key { color: var(–muted); }
-.riepilogo-row .val { color: var(–white); font-weight: 500; }
+.alert.warn { background: rgba(234,179,8,0.08); border: 1px solid rgba(234,179,8,0.25); color: #fde68a; display: block; }
 
 /* SUCCESS */
 .success-panel { text-align: center; padding: 48px 24px; }
-.success-icon { width: 72px; height: 72px; border-radius: 50%; background: rgba(255,87,1,0.12); border: 2px solid var(–orange); display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 32px; }
-.success-panel h2 { font-family: ‘Barlow Condensed’, sans-serif; font-weight: 800; font-size: 32px; text-transform: uppercase; margin-bottom: 12px; }
-.success-panel p { color: var(–muted); font-size: 15px; line-height: 1.6; }
+.success-icon { width: 72px; height: 72px; border-radius: 50%; background: rgba(255,87,1,0.12); border: 2px solid var(--orange); display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 32px; }
+.success-panel h2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 32px; text-transform: uppercase; margin-bottom: 12px; }
+.success-panel p { color: var(--muted); font-size: 15px; line-height: 1.6; }
 
 /* SPINNER */
 .spinner { display: inline-block; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.6s linear infinite; vertical-align: middle; margin-right: 8px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.no-dates { padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(–input-border); border-radius: var(–radius); color: var(–muted); font-size: 13px; text-align: center; }
-
-@media (max-width: 480px) {
-.field-group { grid-template-columns: 1fr; }
+@media (max-width: 540px) {
+  .field-group { grid-template-columns: 1fr; }
+  .checks { grid-template-columns: 1fr; }
+  .nps { grid-template-columns: repeat(11, 1fr); gap: 4px; }
+  .nps-btn { font-size: 13px; }
+  .rate-btn { width: 44px; height: 44px; font-size: 16px; }
+  .na-btn { height: 44px; }
 }
 </style>
-
 </head>
 <body>
 <div class="container">
@@ -310,8 +315,8 @@ transition: all 0.2s;
       <span class="logo-text">Athlon Club Roma</span>
       <div class="logo-accent"></div>
     </div>
-    <h1>Prenota la <span>Prova</span></h1>
-    <p>Completa il modulo per prenotare una sessione di prova per il tuo atleta.<br>Solo date future disponibili.</p>
+    <h1>Questionario <span>Fine Stagione</span></h1>
+    <p>Scuola Nuoto Bambini · Stagione 2025/2026.<br>Il vostro feedback ci aiuta a migliorare il servizio per la prossima stagione. Bastano circa 4 minuti.</p>
   </div>
 
   <div class="steps" id="stepsBar">
@@ -322,61 +327,101 @@ transition: all 0.2s;
     <div class="step-dot" id="s3">3</div>
     <div class="step-line" id="l3"></div>
     <div class="step-dot" id="s4">4</div>
+    <div class="step-line" id="l4"></div>
+    <div class="step-dot" id="s5">5</div>
+    <div class="step-line" id="l5"></div>
+    <div class="step-dot" id="s6">6</div>
   </div>
 
-  <!-- PAGE 1 -->
-
+  <!-- PAGE 1 — ISCRIZIONE & INFO INIZIALI -->
   <div class="page active" id="page1">
     <div class="section">
-      <div class="section-label">Seleziona lo Sport</div>
-      <div class="sport-selector" id="sportSelector">
-        <button class="sport-btn" data-sport="nuoto">
-          <span class="icon">🏊</span>
-          <span class="label">Nuoto</span>
-          <span class="sub">Agonismo &amp; Propaganda</span>
-        </button>
-        <button class="sport-btn" data-sport="pallanuoto">
-          <span class="icon">🤽</span>
-          <span class="label">Pallanuoto</span>
-          <span class="sub">Under 14 &amp; Acquagol</span>
-        </button>
+      <div class="section-label">Iscrizione e informazioni iniziali</div>
+      <div class="section-hint">Quanto siete d'accordo con le seguenti affermazioni? Valutate da 1 (per niente) a 5 (totalmente). Usate "Non utilizzato" se non applicabile.</div>
+
+      <div class="q">
+        <div class="q-label">Le informazioni sui corsi sul sito athlonroma.it sono chiare<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="info_sito"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">La procedura di iscrizione online è semplice e intuitiva<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="iscrizione_online"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Le condizioni contrattuali e i prezzi sono trasparenti<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="trasparenza_contratto"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">L'invio del certificato medico (desk@athlonroma.it) è stato semplice<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="cert_medico" data-na="1"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">L'accoglienza e l'onboarding al primo giorno (badge, info pratiche)<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="onboarding"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Il wiki (wiki.athlonroma.it) è una risorsa utile<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="wiki" data-na="1"></div></div>
       </div>
     </div>
-    <div class="section" id="catSection" style="display:none">
-      <div class="section-label">Categoria Atleta</div>
-      <div class="cat-options" id="catOptions"></div>
-    </div>
-    <div class="section" id="dateSection" style="display:none">
-      <div class="section-label">Scegli la Data</div>
-      <div class="date-grid" id="dateGrid"></div>
-    </div>
-    <div class="section" id="orarioSection" style="display:none">
-      <div class="section-label">Orario</div>
-      <div class="orario-options" id="orarioOptions"></div>
-    </div>
+
     <div class="alert error" id="alert1"></div>
     <button class="btn-submit" id="btnP1">Continua &rarr;</button>
   </div>
 
-  <!-- PAGE 2 -->
-
+  <!-- PAGE 2 — DIDATTICA, ISTRUTTORI & BREVETTI -->
   <div class="page" id="page2">
     <div class="section">
-      <div class="section-label">Dati Atleta</div>
-      <div class="field-group">
-        <div class="field"><label>Nome *</label><input type="text" id="atleta_nome" placeholder="Marco" autocomplete="off"></div>
-        <div class="field"><label>Cognome *</label><input type="text" id="atleta_cognome" placeholder="Rossi" autocomplete="off"></div>
+      <div class="section-label">Didattica, istruttori e brevetti</div>
+      <div class="section-hint">Valutate da 1 (per niente) a 5 (totalmente).</div>
+
+      <div class="q">
+        <div class="q-label">La qualità della didattica in vasca è elevata<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="qualita_didattica"></div></div>
       </div>
-      <div class="field-group" style="margin-top:12px">
-        <div class="field"><label>Data di Nascita *</label><input type="date" id="atleta_dob"></div>
+      <div class="q">
+        <div class="q-label">Gli istruttori sono preparati e competenti<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="competenza_istruttori"></div></div>
       </div>
-      <div class="field-group full" style="margin-top:12px">
-        <div class="field">
-          <label>Livello natatorio ed esperienza *</label>
-          <textarea id="atleta_note" placeholder="Es: sa nuotare autonomamente, ha fatto corsi ma mai agonismo..."></textarea>
+      <div class="q">
+        <div class="q-label">Gli istruttori sanno motivare e coinvolgere il bambino<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="motivazione"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Il livello/gruppo assegnato è adeguato alle capacità del bambino<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="livello_adeguato"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Il numero di bambini per corsia consente un buon apprendimento<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="rapporto_corsia"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Vediamo progressi tecnici concreti durante la stagione<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="progressi"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">La sezione Brevetti dell'app/portale ci aiuta a seguire i progressi<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="sez_brevetti" data-na="1"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">L'evento brevetti di fine stagione (diploma, libretto, foto) è ben organizzato<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="evento_brevetti" data-na="1"></div></div>
+      </div>
+
+      <div class="q">
+        <div class="q-label">Avete utilizzato l'appuntamento telefonico con il Direttore Tecnico?<span class="req">*</span></div>
+        <div class="chips" data-q="dt_usato">
+          <button type="button" class="chip" data-v="si">Sì</button>
+          <button type="button" class="chip" data-v="no">No</button>
+          <button type="button" class="chip" data-v="non_sapevo">Non sapevo esistesse</button>
         </div>
       </div>
+      <div class="q" id="dtRatingWrap" style="display:none">
+        <div class="q-label">Quanto è stato utile l'appuntamento con il Direttore Tecnico?</div>
+        <div class="rating-wrap"><div class="rating" data-q="dt_utilita"></div></div>
+      </div>
     </div>
+
     <div class="alert error" id="alert2"></div>
     <div class="btn-row">
       <button class="btn-back" id="backP2">&#8592; Indietro</button>
@@ -384,23 +429,37 @@ transition: all 0.2s;
     </div>
   </div>
 
-  <!-- PAGE 3 -->
-
+  <!-- PAGE 3 — ORGANIZZAZIONE & OPERATIVITÀ -->
   <div class="page" id="page3">
     <div class="section">
-      <div class="section-label">Dati Genitore / Tutore</div>
-      <div class="field-group">
-        <div class="field"><label>Nome *</label><input type="text" id="gen_nome" placeholder="Luca" autocomplete="off"></div>
-        <div class="field"><label>Cognome *</label><input type="text" id="gen_cognome" placeholder="Rossi" autocomplete="off"></div>
+      <div class="section-label">Organizzazione e operatività</div>
+
+      <div class="q">
+        <div class="q-label">Gli orari del corso sono comodi per la nostra famiglia<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="orari"></div></div>
       </div>
-      <div class="field-group" style="margin-top:12px">
-        <div class="field"><label>Data di Nascita *</label><input type="date" id="gen_dob"></div>
-        <div class="field"><label>Cellulare *</label><input type="tel" id="gen_cel" placeholder="+39 333 1234567"></div>
+      <div class="q">
+        <div class="q-label">Le lezioni iniziano e finiscono in modo puntuale<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="puntualita"></div></div>
       </div>
-      <div class="field-group full" style="margin-top:12px">
-        <div class="field"><label>Email *</label><input type="email" id="gen_email" placeholder="genitore@email.com"></div>
+      <div class="q">
+        <div class="q-label">La procedura per cancellare una lezione e prenotare il recupero è chiara<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="proc_recuperi" data-na="1"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">La disponibilità di slot per recuperare le lezioni è adeguata<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="slot_recuperi" data-na="1"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">La gestione dei cambi di gruppo o orario è efficiente<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="cambi" data-na="1"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Le comunicazioni durante la stagione (avvisi, email) sono tempestive<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="comunicazioni"></div></div>
       </div>
     </div>
+
     <div class="alert error" id="alert3"></div>
     <div class="btn-row">
       <button class="btn-back" id="backP3">&#8592; Indietro</button>
@@ -408,349 +467,470 @@ transition: all 0.2s;
     </div>
   </div>
 
-  <!-- PAGE 4 -->
-
+  <!-- PAGE 4 — PORTALE & APP -->
   <div class="page" id="page4">
     <div class="section">
-      <div class="section-label">Riepilogo Prenotazione</div>
-      <div class="riepilogo-card" id="riepilogoCard"></div>
+      <div class="section-label">Portale Web e App Athlon Club</div>
+      <div class="section-hint">Strumenti digitali: athlonroma.it/portale e l'app "Athlon Club".</div>
+
+      <div class="q">
+        <div class="q-label">Il portale web è facile da usare<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="portale_uso" data-na="1"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">L'app Athlon Club è facile da usare<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="app_uso" data-na="1"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">La gestione delle prenotazioni e disdette funziona bene<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="prenotazioni" data-na="1"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">La gestione dei pagamenti, scadenze e abbonamenti è chiara<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="pagamenti" data-na="1"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">La gestione del nucleo familiare e dei documenti è comoda<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="nucleo" data-na="1"></div></div>
+      </div>
     </div>
+
     <div class="alert error" id="alert4"></div>
     <div class="btn-row">
-      <button class="btn-back" id="backP4">&#8592; Modifica</button>
-      <button class="btn-submit" id="btnSend">Conferma Prenotazione</button>
+      <button class="btn-back" id="backP4">&#8592; Indietro</button>
+      <button class="btn-submit" id="btnP4">Continua &rarr;</button>
+    </div>
+  </div>
+
+  <!-- PAGE 5 — STRUTTURE & ACCESSO -->
+  <div class="page" id="page5">
+    <div class="section">
+      <div class="section-label">Strutture e accesso</div>
+
+      <div class="q">
+        <div class="q-label">La piscina è pulita e ben tenuta<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="pulizia_piscina"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">La temperatura dell'acqua e dell'ambiente è confortevole<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="temperatura"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Spogliatoi: pulizia, docce, phon e dotazioni<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="spogliatoi"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Armadietti e organizzazione degli spogliatoi<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="armadietti"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Aree d'attesa per i genitori (balconata, accoglienza)<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="aree_attesa"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Le procedure di accesso (badge, tornelli, sovrascarpe, accompagnatori) sono chiare e applicate<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="procedure_accesso"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Mio figlio/a si sente sicuro/a e a suo agio nella struttura<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="sicurezza"></div></div>
+      </div>
+    </div>
+
+    <div class="alert error" id="alert5"></div>
+    <div class="btn-row">
+      <button class="btn-back" id="backP5">&#8592; Indietro</button>
+      <button class="btn-submit" id="btnP5">Continua &rarr;</button>
+    </div>
+  </div>
+
+  <!-- PAGE 6 — SEGRETERIA, SODDISFAZIONE & SUGGERIMENTI -->
+  <div class="page" id="page6">
+    <div class="section">
+      <div class="section-label">Segreteria e aspetti contrattuali</div>
+
+      <div class="q">
+        <div class="q-label">La segreteria (desk) è cortese e disponibile<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="desk_cortesia" data-na="1"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">I tempi di risposta alle richieste sono adeguati<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="desk_tempi" data-na="1"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Il rapporto qualità/prezzo è giusto<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="qualita_prezzo"></div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Soddisfazione complessiva</div>
+
+      <div class="q">
+        <div class="q-label">Quanto consigliereste la Scuola Nuoto Athlon a un amico/parente?<span class="req">*</span></div>
+        <div class="q-sub">Da 0 (mai) a 10 (assolutamente sì).</div>
+        <div class="nps" data-q="nps"></div>
+      </div>
+
+      <div class="q">
+        <div class="q-label">Tornerete a iscrivervi per la stagione 2026/2027?<span class="req">*</span></div>
+        <div class="chips" data-q="riconferma">
+          <button type="button" class="chip" data-v="si">Sì, sicuramente</button>
+          <button type="button" class="chip" data-v="probabile">Probabilmente sì</button>
+          <button type="button" class="chip" data-v="non_so">Non so ancora</button>
+          <button type="button" class="chip" data-v="probabile_no">Probabilmente no</button>
+          <button type="button" class="chip" data-v="no">No</button>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-label">A quali altre attività Athlon sareste interessati?</div>
+        <div class="checks" data-q="interessi" data-multi="1">
+          <button type="button" class="check" data-v="intensivi_estivi"><span class="box">&#10003;</span>Corsi intensivi estivi</button>
+          <button type="button" class="check" data-v="pallanuoto"><span class="box">&#10003;</span>Pallanuoto bambini</button>
+          <button type="button" class="check" data-v="pre_agonismo"><span class="box">&#10003;</span>Pre-agonismo / Agonismo</button>
+          <button type="button" class="check" data-v="gare_asi"><span class="box">&#10003;</span>Gare ASI</button>
+          <button type="button" class="check" data-v="stage"><span class="box">&#10003;</span>Stage / open day</button>
+          <button type="button" class="check" data-v="corsi_genitori"><span class="box">&#10003;</span>Corsi per i genitori</button>
+        </div>
+      </div>
+
+      <div class="field-group full" style="margin-top:8px">
+        <div class="field">
+          <label>Cosa avete apprezzato di più</label>
+          <textarea id="apprezzato" placeholder="Raccontateci in poche righe..."></textarea>
+        </div>
+      </div>
+      <div class="field-group full" style="margin-top:12px">
+        <div class="field">
+          <label>Cosa vorreste vedere migliorato</label>
+          <textarea id="migliorare" placeholder="Suggerimenti, criticità, idee..."></textarea>
+        </div>
+      </div>
+
+      <div class="q" style="margin-top:18px">
+        <div class="q-label">Possiamo ricontattarvi per approfondire i feedback?<span class="req">*</span></div>
+        <div class="chips" data-q="ricontatto">
+          <button type="button" class="chip" data-v="si">Sì</button>
+          <button type="button" class="chip" data-v="no">No, grazie</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert error" id="alert6"></div>
+    <div class="btn-row">
+      <button class="btn-back" id="backP6">&#8592; Indietro</button>
+      <button class="btn-submit" id="btnSend">Invia Questionario</button>
     </div>
   </div>
 
   <!-- SUCCESS -->
-
   <div class="page" id="pageSuccess">
     <div class="success-panel">
       <div class="success-icon">&#10003;</div>
-      <h2>Prenotazione <span style="color:var(--orange)">Inviata!</span></h2>
-      <p>La tua richiesta è stata ricevuta.<br>Ti contatteremo al cellulare indicato per confermare la prenotazione.</p>
+      <h2>Grazie <span style="color:var(--orange)">davvero!</span></h2>
+      <p>Il vostro feedback è stato ricevuto.<br>Ci aiuterà a costruire una scuola nuoto sempre migliore per i nostri bambini.</p>
       <br>
       <p style="font-size:12px;color:var(--muted)">Athlon Club Roma &middot; Via Ugo Ojetti 134 &middot; Roma</p>
     </div>
   </div>
 
 </div>
+
 <script>
 (function() {
   'use strict';
 
-// ── STATE ──────────────────────────────────────────────
-var state = { sport: null, categoria: null, data: null, orario: null };
-var dateOraMap = {};
+  // ── QUERY PARAMS (utente identificato dal link) ───────
+  function readParams() {
+    var p = {};
+    try {
+      var sp = new URLSearchParams(window.location.search);
+      sp.forEach(function(v, k){ p[k] = v; });
+    } catch (e) {}
+    return p;
+  }
+  var URL_PARAMS = readParams();
 
-// ── DATE HELPERS ───────────────────────────────────────
-var OGGI = new Date(); OGGI.setHours(0,0,0,0);
-var MESI = [‘Gen’,‘Feb’,‘Mar’,‘Apr’,‘Mag’,‘Giu’,‘Lug’,‘Ago’,‘Set’,‘Ott’,‘Nov’,‘Dic’];
-var GG   = [‘Dom’,‘Lun’,‘Mar’,‘Mer’,‘Gio’,‘Ven’,‘Sab’];
+  // ── STATE ─────────────────────────────────────────────
+  var state = {
+    info_sito: null, iscrizione_online: null, trasparenza_contratto: null,
+    cert_medico: null, onboarding: null, wiki: null,
 
-function pad(n){ return String(n).padStart(2,‘0’); }
-function fmt(d){ return d.getFullYear()+’-’+pad(d.getMonth()+1)+’-’+pad(d.getDate()); }
-function isFuture(d){ var x=new Date(d); x.setHours(0,0,0,0); return x>OGGI; }
+    qualita_didattica: null, competenza_istruttori: null, motivazione: null,
+    livello_adeguato: null, rapporto_corsia: null, progressi: null,
+    sez_brevetti: null, evento_brevetti: null,
+    dt_usato: null, dt_utilita: null,
 
-function dateRange(from, to){
-var list=[], cur=new Date(from), end=new Date(to);
-cur.setHours(0,0,0,0);
-while(cur<=end){ if(isFuture(cur)) list.push(new Date(cur)); cur.setDate(cur.getDate()+1); }
-return list;
-}
+    orari: null, puntualita: null, proc_recuperi: null, slot_recuperi: null,
+    cambi: null, comunicazioni: null,
 
-function isExcluded(d, ranges){
-var s=fmt(d);
-return ranges.some(function(r){ return s>=r[0]&&s<=r[1]; });
-}
+    portale_uso: null, app_uso: null, prenotazioni: null, pagamenti: null, nucleo: null,
 
-function getDates(sport, cat){
-var m1=new Date(‘2026-05-02’), m2=new Date(‘2026-05-31’);
-var j1=new Date(‘2026-06-01’), j2=new Date(‘2026-06-30’);
-var exMay=[[‘2026-05-11’,‘2026-05-17’]];
-var exJun=[[‘2026-06-02’,‘2026-06-02’],[‘2026-06-29’,‘2026-06-29’]];
-var res=[];
+    pulizia_piscina: null, temperatura: null, spogliatoi: null, armadietti: null,
+    aree_attesa: null, procedure_accesso: null, sicurezza: null,
 
-```
-if(sport==='nuoto'){
-  if(cat==='propaganda'){
-    dateRange(m1,m2).forEach(function(d){
-      if([1,4,6].indexOf(d.getDay())>=0 && !isExcluded(d,exMay)) res.push({d:d,ora:['17:30']});
-    });
-    dateRange(j1,j2).forEach(function(d){
-      if([1,4].indexOf(d.getDay())>=0 && !isExcluded(d,exJun)) res.push({d:d,ora:['16:30','17:20']});
-    });
-  } else if(cat==='agonismo'){
-    dateRange(m1,m2).forEach(function(d){
-      if([1,2,4,5].indexOf(d.getDay())>=0 && !isExcluded(d,exMay)) res.push({d:d,ora:['15:00']});
-    });
-    dateRange(j1,j2).forEach(function(d){
-      if([1,4].indexOf(d.getDay())>=0 && !isExcluded(d,exJun)) res.push({d:d,ora:['16:30','17:20']});
+    desk_cortesia: null, desk_tempi: null, qualita_prezzo: null,
+
+    nps: null, riconferma: null, interessi: [],
+    apprezzato: '', migliorare: '', ricontatto: null
+  };
+
+  // ── RATING (1–5 + opzionale "Non utilizzato") ─────────
+  function buildRating(el, key, hasNa) {
+    el.innerHTML = '';
+    for (var i = 1; i <= 5; i++) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'rate-btn';
+      b.dataset.v = String(i);
+      b.textContent = i;
+      el.appendChild(b);
+    }
+    if (hasNa) {
+      var na = document.createElement('button');
+      na.type = 'button';
+      na.className = 'na-btn';
+      na.dataset.v = 'na';
+      na.textContent = 'Non utilizzato';
+      el.appendChild(na);
+    }
+    el.addEventListener('click', function(e) {
+      var btn = e.target.closest('.rate-btn, .na-btn');
+      if (!btn) return;
+      el.querySelectorAll('.rate-btn, .na-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      var v = btn.dataset.v;
+      state[key] = (v === 'na') ? 'na' : parseInt(v, 10);
     });
   }
-} else {
-  if(cat==='u14'){
-    dateRange(m1,m2).forEach(function(d){
-      if([2,5].indexOf(d.getDay())>=0) res.push({d:d,ora:['14:30']});
+  document.querySelectorAll('.rating').forEach(function(el){
+    buildRating(el, el.dataset.q, el.dataset.na === '1');
+  });
+
+  // ── NPS (0–10) ────────────────────────────────────────
+  (function buildNps(){
+    var el = document.querySelector('.nps[data-q="nps"]');
+    if (!el) return;
+    for (var i = 0; i <= 10; i++) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'nps-btn';
+      b.dataset.v = String(i);
+      b.textContent = i;
+      el.appendChild(b);
+    }
+    el.addEventListener('click', function(e) {
+      var btn = e.target.closest('.nps-btn');
+      if (!btn) return;
+      state.nps = parseInt(btn.dataset.v, 10);
+      el.querySelectorAll('.nps-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
     });
-    dateRange(j1,j2).forEach(function(d){
-      if([2,4].indexOf(d.getDay())>=0 && !isExcluded(d,exJun)) res.push({d:d,ora:['16:30','17:20']});
+  })();
+
+  // ── CHIPS (single choice) ─────────────────────────────
+  document.querySelectorAll('.chips').forEach(function(group){
+    var key = group.dataset.q;
+    group.addEventListener('click', function(e){
+      var btn = e.target.closest('.chip');
+      if (!btn) return;
+      state[key] = btn.dataset.v;
+      group.querySelectorAll('.chip').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      // Mostra/Nasconde valutazione DT in base alla scelta
+      if (key === 'dt_usato') {
+        var wrap = document.getElementById('dtRatingWrap');
+        if (btn.dataset.v === 'si') {
+          wrap.style.display = 'block';
+        } else {
+          wrap.style.display = 'none';
+          state.dt_utilita = null;
+          wrap.querySelectorAll('.rate-btn, .na-btn').forEach(function(b){ b.classList.remove('active'); });
+        }
+      }
     });
-  } else if(cat==='acquagol'){
-    dateRange(m1,m2).forEach(function(d){
-      if([2,5].indexOf(d.getDay())>=0 && !isExcluded(d,exMay)) res.push({d:d,ora:['16:50']});
+  });
+
+  // ── CHECKS (multi choice) ─────────────────────────────
+  document.querySelectorAll('.checks').forEach(function(group){
+    var key = group.dataset.q;
+    group.addEventListener('click', function(e){
+      var btn = e.target.closest('.check');
+      if (!btn) return;
+      btn.classList.toggle('active');
+      var values = [];
+      group.querySelectorAll('.check.active').forEach(function(b){ values.push(b.dataset.v); });
+      state[key] = values;
     });
-    dateRange(j1,j2).forEach(function(d){
-      if([2,4].indexOf(d.getDay())>=0 && !isExcluded(d,exJun)) res.push({d:d,ora:['16:30','17:20']});
-    });
-  }
-}
-return res;
-```
+  });
 
-}
-
-// ── PAGES ──────────────────────────────────────────────
-function showPage(n){
-document.querySelectorAll(’.page’).forEach(function(p){ p.classList.remove(‘active’); });
-var pg = document.getElementById(‘page’+n);
-if(pg) pg.classList.add(‘active’);
-for(var i=1;i<=4;i++){
-var dot=document.getElementById(‘s’+i), line=document.getElementById(‘l’+i);
-if(!dot) continue;
-dot.classList.remove(‘active’,‘done’);
-if(i<n){ dot.classList.add(‘done’); dot.textContent=‘✓’; }
-else if(i===n){ dot.classList.add(‘active’); dot.textContent=i; }
-else { dot.textContent=i; }
-if(line) line.classList.toggle(‘done’, i<n);
-}
-window.scrollTo({top:0,behavior:‘smooth’});
-}
-
-function showAlert(id, msg){
-var el=document.getElementById(id);
-if(!el) return;
-el.textContent=msg; el.style.display=‘block’;
-setTimeout(function(){ el.style.display=‘none’; }, 4000);
-}
-
-// ── RENDER CATEGORIE ───────────────────────────────────
-function renderCategorie(sport){
-var cats = sport===‘nuoto’
-? [{id:‘propaganda’,nome:‘Propaganda’,anni:‘Nati 2014–2018’,badge:‘Lun/Gio/Sab’},
-{id:‘agonismo’,nome:‘Agonismo’,anni:‘Nati 2008–2015’,badge:‘Lun/Mar/Gio/Ven’}]
-: [{id:‘u14’,nome:‘Under 14’,anni:‘Nati 2013–2015’,badge:‘Mar/Ven’},
-{id:‘acquagol’,nome:‘Acquagol’,anni:‘Nati 2016–2018’,badge:‘Mar/Ven’}];
-var el=document.getElementById(‘catOptions’);
-el.innerHTML=’’;
-cats.forEach(function(c){
-var btn=document.createElement(‘button’);
-btn.className=‘cat-btn’;
-btn.dataset.cat=c.id;
-btn.innerHTML=’<div><div class="cat-name">’+c.nome+’</div><div class="cat-anni">’+c.anni+’</div></div>’
-+’<div class="cat-badge">’+c.badge+’</div>’;
-el.appendChild(btn);
-});
-}
-
-// ── RENDER DATE ────────────────────────────────────────
-function renderDate(){
-var grid=document.getElementById(‘dateGrid’);
-var list=getDates(state.sport, state.categoria);
-dateOraMap={};
-grid.innerHTML=’’;
-if(!list.length){
-grid.innerHTML=’<div class="no-dates">Nessuna data disponibile.</div>’;
-return;
-}
-list.forEach(function(item){
-var key=fmt(item.d);
-dateOraMap[key]=item.ora;
-var btn=document.createElement(‘button’);
-btn.className=‘date-btn’;
-btn.dataset.key=key;
-btn.innerHTML=’<div class="d-day">’+item.d.getDate()+’</div>’
-+’<div class="d-month">’+MESI[item.d.getMonth()]+’</div>’
-+’<div class="d-wd">’+GG[item.d.getDay()]+’</div>’;
-grid.appendChild(btn);
-});
-}
-
-// ── RENDER ORARI ───────────────────────────────────────
-function renderOrari(orari){
-var el=document.getElementById(‘orarioOptions’);
-el.innerHTML=’’;
-state.orario=null;
-orari.forEach(function(o){
-var btn=document.createElement(‘button’);
-btn.className=‘ora-btn’;
-btn.dataset.ora=o;
-btn.textContent=o;
-el.appendChild(btn);
-});
-if(orari.length===1){
-state.orario=orari[0];
-el.querySelector(’.ora-btn’).classList.add(‘active’);
-var lbl=document.createElement(‘span’);
-lbl.className=‘ora-fixed-label’;
-lbl.textContent=‘orario fisso’;
-el.appendChild(lbl);
-}
-}
-
-// ── EVENT DELEGATION ───────────────────────────────────
-document.getElementById(‘sportSelector’).addEventListener(‘click’, function(e){
-var btn=e.target.closest(’.sport-btn’);
-if(!btn) return;
-state.sport=btn.dataset.sport;
-state.categoria=null; state.data=null; state.orario=null;
-document.querySelectorAll(’.sport-btn’).forEach(function(b){ b.classList.remove(‘active’); });
-btn.classList.add(‘active’);
-renderCategorie(state.sport);
-document.getElementById(‘catSection’).style.display=‘block’;
-document.getElementById(‘dateSection’).style.display=‘none’;
-document.getElementById(‘orarioSection’).style.display=‘none’;
-});
-
-document.getElementById(‘catOptions’).addEventListener(‘click’, function(e){
-var btn=e.target.closest(’.cat-btn’);
-if(!btn) return;
-state.categoria=btn.dataset.cat;
-state.data=null; state.orario=null;
-document.querySelectorAll(’.cat-btn’).forEach(function(b){ b.classList.remove(‘active’); });
-btn.classList.add(‘active’);
-renderDate();
-document.getElementById(‘dateSection’).style.display=‘block’;
-document.getElementById(‘orarioSection’).style.display=‘none’;
-});
-
-document.getElementById(‘dateGrid’).addEventListener(‘click’, function(e){
-var btn=e.target.closest(’.date-btn’);
-if(!btn) return;
-var key=btn.dataset.key;
-var orari=dateOraMap[key];
-if(!orari) return;
-state.data=key; state.orario=null;
-document.querySelectorAll(’.date-btn’).forEach(function(b){ b.classList.remove(‘active’); });
-btn.classList.add(‘active’);
-renderOrari(orari);
-document.getElementById(‘orarioSection’).style.display=‘block’;
-});
-
-document.getElementById(‘orarioOptions’).addEventListener(‘click’, function(e){
-var btn=e.target.closest(’.ora-btn’);
-if(!btn) return;
-state.orario=btn.dataset.ora;
-document.querySelectorAll(’.ora-btn’).forEach(function(b){ b.classList.remove(‘active’); });
-btn.classList.add(‘active’);
-});
-
-// ── NAVIGAZIONE ────────────────────────────────────────
-document.getElementById(‘btnP1’).addEventListener(‘click’, function(){
-if(!state.sport)     return showAlert(‘alert1’,‘Seleziona uno sport.’);
-if(!state.categoria) return showAlert(‘alert1’,‘Seleziona una categoria.’);
-if(!state.data)      return showAlert(‘alert1’,‘Seleziona una data.’);
-if(!state.orario)    return showAlert(‘alert1’,‘Seleziona un orario.’);
-showPage(2);
-});
-
-document.getElementById(‘backP2’).addEventListener(‘click’, function(){ showPage(1); });
-document.getElementById(‘btnP2’).addEventListener(‘click’, function(){
-var n=document.getElementById(‘atleta_nome’).value.trim();
-var c=document.getElementById(‘atleta_cognome’).value.trim();
-var d=document.getElementById(‘atleta_dob’).value;
-var note=document.getElementById(‘atleta_note’).value.trim();
-if(!n||!c) return showAlert(‘alert2’,‘Inserisci nome e cognome dell'atleta.’);
-if(!d)     return showAlert(‘alert2’,‘Inserisci la data di nascita dell'atleta.’);
-if(!note)  return showAlert(‘alert2’,‘Descrivi il livello natatorio dell'atleta.’);
-showPage(3);
-});
-
-document.getElementById(‘backP3’).addEventListener(‘click’, function(){ showPage(2); });
-document.getElementById(‘btnP3’).addEventListener(‘click’, function(){
-var n=document.getElementById(‘gen_nome’).value.trim();
-var c=document.getElementById(‘gen_cognome’).value.trim();
-var d=document.getElementById(‘gen_dob’).value;
-var cel=document.getElementById(‘gen_cel’).value.trim();
-var email=document.getElementById(‘gen_email’).value.trim();
-if(!n||!c)           return showAlert(‘alert3’,‘Inserisci nome e cognome del genitore.’);
-if(!d)               return showAlert(‘alert3’,‘Inserisci la data di nascita del genitore.’);
-if(!cel)             return showAlert(‘alert3’,‘Inserisci il numero di cellulare.’);
-if(!email||email.indexOf(’@’)<0) return showAlert(‘alert3’,‘Inserisci un'email valida.’);
-
-```
-var labels={nuoto:'Nuoto',pallanuoto:'Pallanuoto',propaganda:'Propaganda',agonismo:'Agonismo',u14:'Under 14',acquagol:'Acquagol'};
-var parts=state.data.split('-');
-var dateIt=parts[2]+'/'+parts[1]+'/'+parts[0];
-document.getElementById('riepilogoCard').innerHTML=
-  '<h3>Riepilogo</h3>'
-  +'<div class="riepilogo-row"><span class="key">Sport</span><span class="val">'+labels[state.sport]+'</span></div>'
-  +'<div class="riepilogo-row"><span class="key">Categoria</span><span class="val">'+labels[state.categoria]+'</span></div>'
-  +'<div class="riepilogo-row"><span class="key">Data</span><span class="val">'+dateIt+'</span></div>'
-  +'<div class="riepilogo-row"><span class="key">Orario</span><span class="val">'+state.orario+'</span></div>'
-  +'<div class="riepilogo-row"><span class="key">Atleta</span><span class="val">'+document.getElementById('atleta_nome').value+' '+document.getElementById('atleta_cognome').value+'</span></div>'
-  +'<div class="riepilogo-row"><span class="key">Genitore</span><span class="val">'+n+' '+c+'</span></div>'
-  +'<div class="riepilogo-row"><span class="key">Cellulare</span><span class="val">'+cel+'</span></div>'
-  +'<div class="riepilogo-row"><span class="key">Email</span><span class="val">'+email+'</span></div>';
-showPage(4);
-```
-
-});
-
-document.getElementById(‘backP4’).addEventListener(‘click’, function(){ showPage(3); });
-document.getElementById(‘btnSend’).addEventListener(‘click’, function(){
-var btn=document.getElementById(‘btnSend’);
-btn.disabled=true;
-btn.innerHTML=’<span class="spinner"></span>Invio in corso…’;
-
-```
-var payload={
-  sport: state.sport,
-  categoria: state.categoria,
-  data_prova: state.data,
-  orario: state.orario,
-  atleta:{
-    nome: document.getElementById('atleta_nome').value.trim(),
-    cognome: document.getElementById('atleta_cognome').value.trim(),
-    data_nascita: document.getElementById('atleta_dob').value,
-    note_livello: document.getElementById('atleta_note').value.trim()
-  },
-  genitore:{
-    nome: document.getElementById('gen_nome').value.trim(),
-    cognome: document.getElementById('gen_cognome').value.trim(),
-    data_nascita: document.getElementById('gen_dob').value,
-    cellulare: document.getElementById('gen_cel').value.trim(),
-    email: document.getElementById('gen_email').value.trim()
-  },
-  timestamp: new Date().toISOString(),
-  source: 'form-prove-athlon'
-};
-
-fetch('https://automazione.n8ndevelop.it/webhook/prenotazione-prove-athlon', {
-  method:'POST',
-  headers:{'Content-Type':'application/json'},
-  body:JSON.stringify(payload)
-})
-.then(function(r){
-  if(r.ok || r.status===200 || r.status===201 || r.status===202){
-    document.getElementById('stepsBar').style.display='none';
+  // ── NAVIGATION HELPERS ────────────────────────────────
+  var TOTAL_STEPS = 6;
+  function showPage(n){
     document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
-    document.getElementById('pageSuccess').classList.add('active');
-  } else {
-    throw new Error('HTTP '+r.status);
+    var pg = document.getElementById('page' + n);
+    if (pg) pg.classList.add('active');
+    for (var i = 1; i <= TOTAL_STEPS; i++) {
+      var dot = document.getElementById('s' + i);
+      var line = document.getElementById('l' + i);
+      if (!dot) continue;
+      dot.classList.remove('active', 'done');
+      if (i < n) { dot.classList.add('done'); dot.textContent = '✓'; }
+      else if (i === n) { dot.classList.add('active'); dot.textContent = i; }
+      else { dot.textContent = i; }
+      if (line) line.classList.toggle('done', i < n);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-})
-.catch(function(){
-  btn.disabled=false;
-  btn.innerHTML='Conferma Prenotazione';
-  showAlert('alert4','Errore nell\'invio. Riprova o contatta lo staff.');
-});
-```
 
-});
+  function showAlert(id, msg){
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = msg;
+    el.style.display = 'block';
+    setTimeout(function(){ el.style.display = 'none'; }, 4500);
+  }
+
+  function need(v){ return v === null || v === undefined || v === '' || (Array.isArray(v) && v.length === 0); }
+
+  function checkAll(keys, alertId){
+    for (var i = 0; i < keys.length; i++) {
+      if (need(state[keys[i]])) {
+        showAlert(alertId, 'Completate tutte le valutazioni di questa pagina.');
+        return false;
+      }
+    }
+    return true;
+  }
+
+  document.getElementById('btnP1').addEventListener('click', function(){
+    if (!checkAll(['info_sito','iscrizione_online','trasparenza_contratto','cert_medico','onboarding','wiki'], 'alert1')) return;
+    showPage(2);
+  });
+  document.getElementById('backP2').addEventListener('click', function(){ showPage(1); });
+  document.getElementById('btnP2').addEventListener('click', function(){
+    var keys = ['qualita_didattica','competenza_istruttori','motivazione','livello_adeguato','rapporto_corsia','progressi','sez_brevetti','evento_brevetti'];
+    if (!checkAll(keys, 'alert2')) return;
+    if (need(state.dt_usato)) return showAlert('alert2', 'Indica se hai usato l\'appuntamento con il Direttore Tecnico.');
+    if (state.dt_usato === 'si' && need(state.dt_utilita)) return showAlert('alert2', 'Valuta l\'utilità dell\'appuntamento con il Direttore Tecnico.');
+    showPage(3);
+  });
+  document.getElementById('backP3').addEventListener('click', function(){ showPage(2); });
+  document.getElementById('btnP3').addEventListener('click', function(){
+    if (!checkAll(['orari','puntualita','proc_recuperi','slot_recuperi','cambi','comunicazioni'], 'alert3')) return;
+    showPage(4);
+  });
+  document.getElementById('backP4').addEventListener('click', function(){ showPage(3); });
+  document.getElementById('btnP4').addEventListener('click', function(){
+    if (!checkAll(['portale_uso','app_uso','prenotazioni','pagamenti','nucleo'], 'alert4')) return;
+    showPage(5);
+  });
+  document.getElementById('backP5').addEventListener('click', function(){ showPage(4); });
+  document.getElementById('btnP5').addEventListener('click', function(){
+    if (!checkAll(['pulizia_piscina','temperatura','spogliatoi','armadietti','aree_attesa','procedure_accesso','sicurezza'], 'alert5')) return;
+    showPage(6);
+  });
+  document.getElementById('backP6').addEventListener('click', function(){ showPage(5); });
+
+  document.getElementById('btnSend').addEventListener('click', function(){
+    state.apprezzato = document.getElementById('apprezzato').value.trim();
+    state.migliorare = document.getElementById('migliorare').value.trim();
+
+    if (!checkAll(['desk_cortesia','desk_tempi','qualita_prezzo'], 'alert6')) return;
+    if (need(state.nps))        return showAlert('alert6', 'Indica un punteggio da 0 a 10.');
+    if (need(state.riconferma)) return showAlert('alert6', 'Indica se tornerete a iscrivervi.');
+    if (need(state.ricontatto)) return showAlert('alert6', 'Indica se possiamo ricontattarvi.');
+
+    var btn = document.getElementById('btnSend');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Invio in corso...';
+
+    var payload = {
+      stagione: '2025/2026',
+      iscritto_params: URL_PARAMS,
+      iscrizione: {
+        info_sito: state.info_sito,
+        iscrizione_online: state.iscrizione_online,
+        trasparenza_contratto: state.trasparenza_contratto,
+        cert_medico: state.cert_medico,
+        onboarding: state.onboarding,
+        wiki: state.wiki
+      },
+      didattica: {
+        qualita_didattica: state.qualita_didattica,
+        competenza_istruttori: state.competenza_istruttori,
+        motivazione: state.motivazione,
+        livello_adeguato: state.livello_adeguato,
+        rapporto_corsia: state.rapporto_corsia,
+        progressi: state.progressi,
+        sez_brevetti: state.sez_brevetti,
+        evento_brevetti: state.evento_brevetti,
+        direttore_tecnico: { usato: state.dt_usato, utilita: state.dt_utilita }
+      },
+      organizzazione: {
+        orari: state.orari,
+        puntualita: state.puntualita,
+        proc_recuperi: state.proc_recuperi,
+        slot_recuperi: state.slot_recuperi,
+        cambi: state.cambi,
+        comunicazioni: state.comunicazioni
+      },
+      digitale: {
+        portale_uso: state.portale_uso,
+        app_uso: state.app_uso,
+        prenotazioni: state.prenotazioni,
+        pagamenti: state.pagamenti,
+        nucleo: state.nucleo
+      },
+      strutture: {
+        pulizia_piscina: state.pulizia_piscina,
+        temperatura: state.temperatura,
+        spogliatoi: state.spogliatoi,
+        armadietti: state.armadietti,
+        aree_attesa: state.aree_attesa,
+        procedure_accesso: state.procedure_accesso,
+        sicurezza: state.sicurezza
+      },
+      segreteria: {
+        cortesia: state.desk_cortesia,
+        tempi_risposta: state.desk_tempi,
+        qualita_prezzo: state.qualita_prezzo
+      },
+      soddisfazione: {
+        nps: state.nps,
+        riconferma: state.riconferma,
+        interessi: state.interessi,
+        apprezzato: state.apprezzato,
+        migliorare: state.migliorare,
+        ricontatto: state.ricontatto
+      },
+      timestamp: new Date().toISOString(),
+      source: 'questionario-fine-stagione-scuola-nuoto-bambini'
+    };
+
+    fetch('https://automazione.n8ndevelop.it/webhook/questionario-fine-stagione-athlon', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(function(r){
+      if (r.ok || r.status === 200 || r.status === 201 || r.status === 202) {
+        document.getElementById('stepsBar').style.display = 'none';
+        document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+        document.getElementById('pageSuccess').classList.add('active');
+      } else {
+        throw new Error('HTTP ' + r.status);
+      }
+    })
+    .catch(function(){
+      btn.disabled = false;
+      btn.innerHTML = 'Invia Questionario';
+      showAlert('alert6', 'Errore nell\'invio. Riprova o contatta lo staff.');
+    });
+  });
 
 })();
 </script>
-
 </body>
 </html>
