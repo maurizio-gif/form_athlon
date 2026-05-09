@@ -117,7 +117,7 @@ body::before {
   gap: 10px;
 }
 .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-.section-hint { font-size: 12px; color: var(--muted); margin: -8px 0 12px; line-height: 1.5; }
+.section-hint { font-size: 12px; color: var(--muted); margin: -8px 0 14px; line-height: 1.5; }
 
 /* QUESTION */
 .q { margin-bottom: 22px; }
@@ -142,7 +142,8 @@ body::before {
 .chip.active { border-color: var(--orange); background: rgba(255,87,1,0.1); color: var(--orange); }
 
 /* RATING (1–5) */
-.rating { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.rating-wrap { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.rating { display: flex; gap: 8px; flex-wrap: wrap; }
 .rate-btn {
   background: var(--input-bg);
   border: 1.5px solid var(--input-border);
@@ -157,6 +158,21 @@ body::before {
 }
 .rate-btn:hover { border-color: rgba(255,87,1,0.35); }
 .rate-btn.active { border-color: var(--orange); background: rgba(255,87,1,0.12); color: var(--orange); box-shadow: 0 0 12px rgba(255,87,1,0.18); }
+.na-btn {
+  background: transparent;
+  border: 1.5px dashed var(--input-border);
+  border-radius: 10px;
+  padding: 0 14px;
+  height: 48px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--muted);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+}
+.na-btn:hover { border-color: rgba(255,87,1,0.35); color: var(--white); }
+.na-btn.active { border-color: var(--orange); color: var(--orange); background: rgba(255,87,1,0.06); border-style: solid; }
 .rate-scale { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 6px; padding: 0 4px; text-transform: uppercase; letter-spacing: 0.08em; }
 
 /* NPS (0–10) */
@@ -209,7 +225,7 @@ body::before {
 .field-group.full { grid-template-columns: 1fr; }
 .field { display: flex; flex-direction: column; gap: 6px; }
 .field label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
-.field input, .field textarea, .field select {
+.field input, .field textarea {
   background: var(--input-bg);
   border: 1.5px solid var(--input-border);
   border-radius: var(--radius);
@@ -223,9 +239,8 @@ body::before {
   -webkit-appearance: none;
 }
 .field input::placeholder, .field textarea::placeholder { color: rgba(255,255,255,0.2); }
-.field input:focus, .field textarea:focus, .field select:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(255,87,1,0.12); }
+.field input:focus, .field textarea:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(255,87,1,0.12); }
 .field textarea { resize: vertical; min-height: 90px; }
-.field select { background-image: linear-gradient(45deg, transparent 50%, rgba(255,255,255,0.4) 50%), linear-gradient(135deg, rgba(255,255,255,0.4) 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; padding-right: 32px; }
 
 /* BUTTONS */
 .btn-submit {
@@ -269,6 +284,7 @@ body::before {
 /* ALERT */
 .alert { border-radius: var(--radius); padding: 12px 16px; font-size: 13px; margin-bottom: 18px; display: none; }
 .alert.error { background: rgba(220,38,38,0.1); border: 1px solid rgba(220,38,38,0.3); color: #fca5a5; }
+.alert.warn { background: rgba(234,179,8,0.08); border: 1px solid rgba(234,179,8,0.25); color: #fde68a; display: block; }
 
 /* SUCCESS */
 .success-panel { text-align: center; padding: 48px 24px; }
@@ -286,6 +302,7 @@ body::before {
   .nps { grid-template-columns: repeat(11, 1fr); gap: 4px; }
   .nps-btn { font-size: 13px; }
   .rate-btn { width: 44px; height: 44px; font-size: 16px; }
+  .na-btn { height: 44px; }
 }
 </style>
 </head>
@@ -299,7 +316,7 @@ body::before {
       <div class="logo-accent"></div>
     </div>
     <h1>Questionario <span>Fine Stagione</span></h1>
-    <p>Scuola Nuoto Bambini · Stagione 2025/2026.<br>Il tuo feedback ci aiuta a migliorare il corso per il prossimo anno. Ci vogliono circa 3 minuti.</p>
+    <p>Scuola Nuoto Bambini · Stagione 2025/2026.<br>Il vostro feedback ci aiuta a migliorare il servizio per la prossima stagione. Bastano circa 4 minuti.</p>
   </div>
 
   <div class="steps" id="stepsBar">
@@ -312,77 +329,39 @@ body::before {
     <div class="step-dot" id="s4">4</div>
     <div class="step-line" id="l4"></div>
     <div class="step-dot" id="s5">5</div>
+    <div class="step-line" id="l5"></div>
+    <div class="step-dot" id="s6">6</div>
   </div>
 
-  <!-- PAGE 1 — DATI CORSO -->
+  <!-- PAGE 1 — ISCRIZIONE & INFO INIZIALI -->
   <div class="page active" id="page1">
     <div class="section">
-      <div class="section-label">Il tuo bambino</div>
+      <div class="section-label">Iscrizione e informazioni iniziali</div>
+      <div class="section-hint">Quanto siete d'accordo con le seguenti affermazioni? Valutate da 1 (per niente) a 5 (totalmente). Usate "Non utilizzato" se non applicabile.</div>
 
       <div class="q">
-        <div class="q-label">Anno di nascita del bambino<span class="req">*</span></div>
-        <div class="chips" data-q="anno_nascita">
-          <button type="button" class="chip" data-v="2014">2014</button>
-          <button type="button" class="chip" data-v="2015">2015</button>
-          <button type="button" class="chip" data-v="2016">2016</button>
-          <button type="button" class="chip" data-v="2017">2017</button>
-          <button type="button" class="chip" data-v="2018">2018</button>
-          <button type="button" class="chip" data-v="2019">2019</button>
-          <button type="button" class="chip" data-v="2020">2020</button>
-          <button type="button" class="chip" data-v="altro">Altro</button>
-        </div>
+        <div class="q-label">Le informazioni sui corsi sul sito athlonroma.it sono chiare<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="info_sito"></div></div>
       </div>
-
       <div class="q">
-        <div class="q-label">Da quanti anni frequenta la scuola nuoto Athlon?<span class="req">*</span></div>
-        <div class="chips" data-q="anzianita">
-          <button type="button" class="chip" data-v="primo">Primo anno</button>
-          <button type="button" class="chip" data-v="2">2 anni</button>
-          <button type="button" class="chip" data-v="3">3 anni</button>
-          <button type="button" class="chip" data-v="4+">4+ anni</button>
-        </div>
+        <div class="q-label">La procedura di iscrizione online è semplice e intuitiva<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="iscrizione_online"></div></div>
       </div>
-
       <div class="q">
-        <div class="q-label">Livello / gruppo del bambino<span class="req">*</span></div>
-        <div class="q-sub">Se non sei sicuro, scegli quello indicato dall'istruttore o "non so".</div>
-        <div class="chips" data-q="livello">
-          <button type="button" class="chip" data-v="ambientamento">Ambientamento</button>
-          <button type="button" class="chip" data-v="acquaticita">Acquaticità</button>
-          <button type="button" class="chip" data-v="principianti">Principianti</button>
-          <button type="button" class="chip" data-v="intermedi">Intermedi</button>
-          <button type="button" class="chip" data-v="avanzati">Avanzati</button>
-          <button type="button" class="chip" data-v="perfezionamento">Perfezionamento</button>
-          <button type="button" class="chip" data-v="non_so">Non so</button>
-        </div>
+        <div class="q-label">Le condizioni contrattuali e i prezzi sono trasparenti<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="trasparenza_contratto"></div></div>
       </div>
-
       <div class="q">
-        <div class="q-label">Giorni di frequenza<span class="req">*</span></div>
-        <div class="checks" data-q="giorni" data-multi="1">
-          <button type="button" class="check" data-v="lun"><span class="box">&#10003;</span>Lunedì</button>
-          <button type="button" class="check" data-v="mar"><span class="box">&#10003;</span>Martedì</button>
-          <button type="button" class="check" data-v="mer"><span class="box">&#10003;</span>Mercoledì</button>
-          <button type="button" class="check" data-v="gio"><span class="box">&#10003;</span>Giovedì</button>
-          <button type="button" class="check" data-v="ven"><span class="box">&#10003;</span>Venerdì</button>
-          <button type="button" class="check" data-v="sab"><span class="box">&#10003;</span>Sabato</button>
-        </div>
+        <div class="q-label">L'invio del certificato medico (desk@athlonroma.it) è stato semplice<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="cert_medico" data-na="1"></div></div>
       </div>
-
       <div class="q">
-        <div class="q-label">Frequenza settimanale<span class="req">*</span></div>
-        <div class="chips" data-q="frequenza">
-          <button type="button" class="chip" data-v="1">1 volta</button>
-          <button type="button" class="chip" data-v="2">2 volte</button>
-          <button type="button" class="chip" data-v="3+">3 o più</button>
-        </div>
+        <div class="q-label">L'accoglienza e l'onboarding al primo giorno (badge, info pratiche)<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="onboarding"></div></div>
       </div>
-
-      <div class="field-group full" style="margin-top:8px">
-        <div class="field">
-          <label>Nome dell'istruttore (se ricordato)</label>
-          <input type="text" id="istruttore" placeholder="Es. Marco / Giulia... (facoltativo)" autocomplete="off">
-        </div>
+      <div class="q">
+        <div class="q-label">Il wiki (wiki.athlonroma.it) è una risorsa utile<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="wiki" data-na="1"></div></div>
       </div>
     </div>
 
@@ -390,46 +369,56 @@ body::before {
     <button class="btn-submit" id="btnP1">Continua &rarr;</button>
   </div>
 
-  <!-- PAGE 2 — DIDATTICA & PROGRESSI -->
+  <!-- PAGE 2 — DIDATTICA, ISTRUTTORI & BREVETTI -->
   <div class="page" id="page2">
     <div class="section">
-      <div class="section-label">Didattica e progressi</div>
-      <div class="section-hint">Valuta da 1 (per niente d'accordo) a 5 (totalmente d'accordo).</div>
+      <div class="section-label">Didattica, istruttori e brevetti</div>
+      <div class="section-hint">Valutate da 1 (per niente) a 5 (totalmente).</div>
 
       <div class="q">
-        <div class="q-label">Mio figlio/a ha fatto progressi tecnici visibili durante la stagione<span class="req">*</span></div>
-        <div class="rating" data-q="progressi"></div>
-        <div class="rate-scale"><span>1 · per niente</span><span>5 · totalmente</span></div>
+        <div class="q-label">La qualità della didattica in vasca è elevata<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="qualita_didattica"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Gli istruttori sono preparati e competenti<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="competenza_istruttori"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Gli istruttori sanno motivare e coinvolgere il bambino<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="motivazione"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Il livello/gruppo assegnato è adeguato alle capacità del bambino<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="livello_adeguato"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Il numero di bambini per corsia consente un buon apprendimento<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="rapporto_corsia"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Vediamo progressi tecnici concreti durante la stagione<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="progressi"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">La sezione Brevetti dell'app/portale ci aiuta a seguire i progressi<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="sez_brevetti" data-na="1"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">L'evento brevetti di fine stagione (diploma, libretto, foto) è ben organizzato<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="evento_brevetti" data-na="1"></div></div>
       </div>
 
       <div class="q">
-        <div class="q-label">L'istruttore è chiaro nelle spiegazioni e nelle correzioni<span class="req">*</span></div>
-        <div class="rating" data-q="chiarezza"></div>
+        <div class="q-label">Avete utilizzato l'appuntamento telefonico con il Direttore Tecnico?<span class="req">*</span></div>
+        <div class="chips" data-q="dt_usato">
+          <button type="button" class="chip" data-v="si">Sì</button>
+          <button type="button" class="chip" data-v="no">No</button>
+          <button type="button" class="chip" data-v="non_sapevo">Non sapevo esistesse</button>
+        </div>
       </div>
-
-      <div class="q">
-        <div class="q-label">L'istruttore presta attenzione al singolo bambino<span class="req">*</span></div>
-        <div class="rating" data-q="attenzione"></div>
-      </div>
-
-      <div class="q">
-        <div class="q-label">L'istruttore sa motivare e coinvolgere il gruppo<span class="req">*</span></div>
-        <div class="rating" data-q="motivazione"></div>
-      </div>
-
-      <div class="q">
-        <div class="q-label">Il numero di bambini per corsia è adeguato<span class="req">*</span></div>
-        <div class="rating" data-q="rapporto"></div>
-      </div>
-
-      <div class="q">
-        <div class="q-label">Mio figlio/a si sente sicuro/a in acqua e durante la lezione<span class="req">*</span></div>
-        <div class="rating" data-q="sicurezza"></div>
-      </div>
-
-      <div class="q">
-        <div class="q-label">Mio figlio/a viene volentieri in piscina<span class="req">*</span></div>
-        <div class="rating" data-q="entusiasmo"></div>
+      <div class="q" id="dtRatingWrap" style="display:none">
+        <div class="q-label">Quanto è stato utile l'appuntamento con il Direttore Tecnico?</div>
+        <div class="rating-wrap"><div class="rating" data-q="dt_utilita"></div></div>
       </div>
     </div>
 
@@ -440,49 +429,34 @@ body::before {
     </div>
   </div>
 
-  <!-- PAGE 3 — ORGANIZZAZIONE & STRUTTURE -->
+  <!-- PAGE 3 — ORGANIZZAZIONE & OPERATIVITÀ -->
   <div class="page" id="page3">
     <div class="section">
-      <div class="section-label">Organizzazione</div>
-      <div class="q">
-        <div class="q-label">Orari del corso<span class="req">*</span></div>
-        <div class="rating" data-q="orari"></div>
-      </div>
-      <div class="q">
-        <div class="q-label">Puntualità di inizio e fine lezione<span class="req">*</span></div>
-        <div class="rating" data-q="puntualita"></div>
-      </div>
-      <div class="q">
-        <div class="q-label">Comunicazioni con i genitori (avvisi, recuperi, eventi)<span class="req">*</span></div>
-        <div class="rating" data-q="comunicazione"></div>
-      </div>
-      <div class="q">
-        <div class="q-label">Cortesia e disponibilità della segreteria<span class="req">*</span></div>
-        <div class="rating" data-q="segreteria"></div>
-      </div>
-      <div class="q">
-        <div class="q-label">Procedura di iscrizione e pagamenti<span class="req">*</span></div>
-        <div class="rating" data-q="iscrizioni"></div>
-      </div>
-    </div>
+      <div class="section-label">Organizzazione e operatività</div>
 
-    <div class="section">
-      <div class="section-label">Strutture</div>
       <div class="q">
-        <div class="q-label">Pulizia e ordine della piscina<span class="req">*</span></div>
-        <div class="rating" data-q="pulizia_piscina"></div>
+        <div class="q-label">Gli orari del corso sono comodi per la nostra famiglia<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="orari"></div></div>
       </div>
       <div class="q">
-        <div class="q-label">Spogliatoi e docce<span class="req">*</span></div>
-        <div class="rating" data-q="spogliatoi"></div>
+        <div class="q-label">Le lezioni iniziano e finiscono in modo puntuale<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="puntualita"></div></div>
       </div>
       <div class="q">
-        <div class="q-label">Temperatura dell'acqua e dell'ambiente<span class="req">*</span></div>
-        <div class="rating" data-q="temperatura"></div>
+        <div class="q-label">La procedura per cancellare una lezione e prenotare il recupero è chiara<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="proc_recuperi" data-na="1"></div></div>
       </div>
       <div class="q">
-        <div class="q-label">Accoglienza e accesso alla struttura<span class="req">*</span></div>
-        <div class="rating" data-q="accoglienza"></div>
+        <div class="q-label">La disponibilità di slot per recuperare le lezioni è adeguata<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="slot_recuperi" data-na="1"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">La gestione dei cambi di gruppo o orario è efficiente<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="cambi" data-na="1"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Le comunicazioni durante la stagione (avvisi, email) sono tempestive<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="comunicazioni"></div></div>
       </div>
     </div>
 
@@ -493,52 +467,31 @@ body::before {
     </div>
   </div>
 
-  <!-- PAGE 4 — SODDISFAZIONE & SUGGERIMENTI -->
+  <!-- PAGE 4 — PORTALE & APP -->
   <div class="page" id="page4">
     <div class="section">
-      <div class="section-label">Soddisfazione complessiva</div>
+      <div class="section-label">Portale Web e App Athlon Club</div>
+      <div class="section-hint">Strumenti digitali: athlonroma.it/portale e l'app "Athlon Club".</div>
 
       <div class="q">
-        <div class="q-label">Quanto consiglieresti la scuola nuoto Athlon a un amico/parente?<span class="req">*</span></div>
-        <div class="q-sub">Da 0 (mai) a 10 (assolutamente sì).</div>
-        <div class="nps" data-q="nps"></div>
+        <div class="q-label">Il portale web è facile da usare<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="portale_uso" data-na="1"></div></div>
       </div>
-
       <div class="q">
-        <div class="q-label">A settembre tornerete a iscrivervi?<span class="req">*</span></div>
-        <div class="chips" data-q="riconferma">
-          <button type="button" class="chip" data-v="si">Sì, sicuramente</button>
-          <button type="button" class="chip" data-v="probabile">Probabilmente sì</button>
-          <button type="button" class="chip" data-v="non_so">Non so ancora</button>
-          <button type="button" class="chip" data-v="probabile_no">Probabilmente no</button>
-          <button type="button" class="chip" data-v="no">No</button>
-        </div>
+        <div class="q-label">L'app Athlon Club è facile da usare<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="app_uso" data-na="1"></div></div>
       </div>
-
       <div class="q">
-        <div class="q-label">Vi interesserebbe partecipare a queste attività?</div>
-        <div class="checks" data-q="interessi" data-multi="1">
-          <button type="button" class="check" data-v="centro_estivo"><span class="box">&#10003;</span>Centro estivo</button>
-          <button type="button" class="check" data-v="stage_intensivi"><span class="box">&#10003;</span>Stage intensivi</button>
-          <button type="button" class="check" data-v="pre_agonismo"><span class="box">&#10003;</span>Pre-agonismo</button>
-          <button type="button" class="check" data-v="pallanuoto"><span class="box">&#10003;</span>Pallanuoto bambini</button>
-          <button type="button" class="check" data-v="saggio"><span class="box">&#10003;</span>Saggio / dimostrazioni</button>
-          <button type="button" class="check" data-v="genitori"><span class="box">&#10003;</span>Corsi per genitori</button>
-        </div>
+        <div class="q-label">La gestione delle prenotazioni e disdette funziona bene<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="prenotazioni" data-na="1"></div></div>
       </div>
-
-      <div class="field-group full" style="margin-top:8px">
-        <div class="field">
-          <label>Cosa avete apprezzato di più della stagione?</label>
-          <textarea id="apprezzato" placeholder="Racconta in poche righe..."></textarea>
-        </div>
+      <div class="q">
+        <div class="q-label">La gestione dei pagamenti, scadenze e abbonamenti è chiara<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="pagamenti" data-na="1"></div></div>
       </div>
-
-      <div class="field-group full" style="margin-top:12px">
-        <div class="field">
-          <label>Cosa vorreste vedere migliorato?</label>
-          <textarea id="migliorare" placeholder="Suggerimenti, criticità, idee..."></textarea>
-        </div>
+      <div class="q">
+        <div class="q-label">La gestione del nucleo familiare e dei documenti è comoda<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="nucleo" data-na="1"></div></div>
       </div>
     </div>
 
@@ -549,27 +502,114 @@ body::before {
     </div>
   </div>
 
-  <!-- PAGE 5 — CONTATTI & INVIO -->
+  <!-- PAGE 5 — STRUTTURE & ACCESSO -->
   <div class="page" id="page5">
     <div class="section">
-      <div class="section-label">Contatti (facoltativi)</div>
-      <div class="section-hint">Lasciali se vuoi essere ricontattato/a o ricevere informazioni sulla prossima stagione. Puoi anche inviare il questionario in forma anonima.</div>
+      <div class="section-label">Strutture e accesso</div>
 
-      <div class="field-group">
-        <div class="field"><label>Nome bambino</label><input type="text" id="bimbo_nome" placeholder="Marco" autocomplete="off"></div>
-        <div class="field"><label>Cognome bambino</label><input type="text" id="bimbo_cognome" placeholder="Rossi" autocomplete="off"></div>
+      <div class="q">
+        <div class="q-label">La piscina è pulita e ben tenuta<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="pulizia_piscina"></div></div>
       </div>
-      <div class="field-group" style="margin-top:12px">
-        <div class="field"><label>Nome genitore</label><input type="text" id="gen_nome" placeholder="Luca" autocomplete="off"></div>
-        <div class="field"><label>Cognome genitore</label><input type="text" id="gen_cognome" placeholder="Rossi" autocomplete="off"></div>
+      <div class="q">
+        <div class="q-label">La temperatura dell'acqua e dell'ambiente è confortevole<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="temperatura"></div></div>
       </div>
-      <div class="field-group" style="margin-top:12px">
-        <div class="field"><label>Email</label><input type="email" id="gen_email" placeholder="genitore@email.com"></div>
-        <div class="field"><label>Cellulare</label><input type="tel" id="gen_cel" placeholder="+39 333 1234567"></div>
+      <div class="q">
+        <div class="q-label">Spogliatoi: pulizia, docce, phon e dotazioni<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="spogliatoi"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Armadietti e organizzazione degli spogliatoi<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="armadietti"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Aree d'attesa per i genitori (balconata, accoglienza)<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="aree_attesa"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Le procedure di accesso (badge, tornelli, sovrascarpe, accompagnatori) sono chiare e applicate<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="procedure_accesso"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Mio figlio/a si sente sicuro/a e a suo agio nella struttura<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="sicurezza"></div></div>
+      </div>
+    </div>
+
+    <div class="alert error" id="alert5"></div>
+    <div class="btn-row">
+      <button class="btn-back" id="backP5">&#8592; Indietro</button>
+      <button class="btn-submit" id="btnP5">Continua &rarr;</button>
+    </div>
+  </div>
+
+  <!-- PAGE 6 — SEGRETERIA, SODDISFAZIONE & SUGGERIMENTI -->
+  <div class="page" id="page6">
+    <div class="section">
+      <div class="section-label">Segreteria e aspetti contrattuali</div>
+
+      <div class="q">
+        <div class="q-label">La segreteria (desk) è cortese e disponibile<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="desk_cortesia" data-na="1"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">I tempi di risposta alle richieste sono adeguati<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="desk_tempi" data-na="1"></div></div>
+      </div>
+      <div class="q">
+        <div class="q-label">Il rapporto qualità/prezzo è giusto<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="qualita_prezzo"></div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Soddisfazione complessiva</div>
+
+      <div class="q">
+        <div class="q-label">Quanto consigliereste la Scuola Nuoto Athlon a un amico/parente?<span class="req">*</span></div>
+        <div class="q-sub">Da 0 (mai) a 10 (assolutamente sì).</div>
+        <div class="nps" data-q="nps"></div>
+      </div>
+
+      <div class="q">
+        <div class="q-label">Tornerete a iscrivervi per la stagione 2026/2027?<span class="req">*</span></div>
+        <div class="chips" data-q="riconferma">
+          <button type="button" class="chip" data-v="si">Sì, sicuramente</button>
+          <button type="button" class="chip" data-v="probabile">Probabilmente sì</button>
+          <button type="button" class="chip" data-v="non_so">Non so ancora</button>
+          <button type="button" class="chip" data-v="probabile_no">Probabilmente no</button>
+          <button type="button" class="chip" data-v="no">No</button>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-label">A quali altre attività Athlon sareste interessati?</div>
+        <div class="checks" data-q="interessi" data-multi="1">
+          <button type="button" class="check" data-v="intensivi_estivi"><span class="box">&#10003;</span>Corsi intensivi estivi</button>
+          <button type="button" class="check" data-v="pallanuoto"><span class="box">&#10003;</span>Pallanuoto bambini</button>
+          <button type="button" class="check" data-v="pre_agonismo"><span class="box">&#10003;</span>Pre-agonismo / Agonismo</button>
+          <button type="button" class="check" data-v="gare_asi"><span class="box">&#10003;</span>Gare ASI</button>
+          <button type="button" class="check" data-v="stage"><span class="box">&#10003;</span>Stage / open day</button>
+          <button type="button" class="check" data-v="corsi_genitori"><span class="box">&#10003;</span>Corsi per i genitori</button>
+        </div>
+      </div>
+
+      <div class="field-group full" style="margin-top:8px">
+        <div class="field">
+          <label>Cosa avete apprezzato di più</label>
+          <textarea id="apprezzato" placeholder="Raccontateci in poche righe..."></textarea>
+        </div>
+      </div>
+      <div class="field-group full" style="margin-top:12px">
+        <div class="field">
+          <label>Cosa vorreste vedere migliorato</label>
+          <textarea id="migliorare" placeholder="Suggerimenti, criticità, idee..."></textarea>
+        </div>
       </div>
 
       <div class="q" style="margin-top:18px">
-        <div class="q-label">Possiamo ricontattarvi per approfondire i vostri feedback?</div>
+        <div class="q-label">Possiamo ricontattarvi per approfondire i feedback?<span class="req">*</span></div>
         <div class="chips" data-q="ricontatto">
           <button type="button" class="chip" data-v="si">Sì</button>
           <button type="button" class="chip" data-v="no">No, grazie</button>
@@ -577,9 +617,9 @@ body::before {
       </div>
     </div>
 
-    <div class="alert error" id="alert5"></div>
+    <div class="alert error" id="alert6"></div>
     <div class="btn-row">
-      <button class="btn-back" id="backP5">&#8592; Indietro</button>
+      <button class="btn-back" id="backP6">&#8592; Indietro</button>
       <button class="btn-submit" id="btnSend">Invia Questionario</button>
     </div>
   </div>
@@ -601,22 +641,43 @@ body::before {
 (function() {
   'use strict';
 
+  // ── QUERY PARAMS (utente identificato dal link) ───────
+  function readParams() {
+    var p = {};
+    try {
+      var sp = new URLSearchParams(window.location.search);
+      sp.forEach(function(v, k){ p[k] = v; });
+    } catch (e) {}
+    return p;
+  }
+  var URL_PARAMS = readParams();
+
+  // ── STATE ─────────────────────────────────────────────
   var state = {
-    anno_nascita: null, anzianita: null, livello: null,
-    giorni: [], frequenza: null, istruttore: '',
-    progressi: null, chiarezza: null, attenzione: null, motivazione: null,
-    rapporto: null, sicurezza: null, entusiasmo: null,
-    orari: null, puntualita: null, comunicazione: null, segreteria: null, iscrizioni: null,
-    pulizia_piscina: null, spogliatoi: null, temperatura: null, accoglienza: null,
+    info_sito: null, iscrizione_online: null, trasparenza_contratto: null,
+    cert_medico: null, onboarding: null, wiki: null,
+
+    qualita_didattica: null, competenza_istruttori: null, motivazione: null,
+    livello_adeguato: null, rapporto_corsia: null, progressi: null,
+    sez_brevetti: null, evento_brevetti: null,
+    dt_usato: null, dt_utilita: null,
+
+    orari: null, puntualita: null, proc_recuperi: null, slot_recuperi: null,
+    cambi: null, comunicazioni: null,
+
+    portale_uso: null, app_uso: null, prenotazioni: null, pagamenti: null, nucleo: null,
+
+    pulizia_piscina: null, temperatura: null, spogliatoi: null, armadietti: null,
+    aree_attesa: null, procedure_accesso: null, sicurezza: null,
+
+    desk_cortesia: null, desk_tempi: null, qualita_prezzo: null,
+
     nps: null, riconferma: null, interessi: [],
-    apprezzato: '', migliorare: '',
-    bimbo_nome: '', bimbo_cognome: '',
-    gen_nome: '', gen_cognome: '', gen_email: '', gen_cel: '',
-    ricontatto: null
+    apprezzato: '', migliorare: '', ricontatto: null
   };
 
-  // Build rating widgets (1–5)
-  function buildRating(el, key) {
+  // ── RATING (1–5 + opzionale "Non utilizzato") ─────────
+  function buildRating(el, key, hasNa) {
     el.innerHTML = '';
     for (var i = 1; i <= 5; i++) {
       var b = document.createElement('button');
@@ -626,19 +687,28 @@ body::before {
       b.textContent = i;
       el.appendChild(b);
     }
+    if (hasNa) {
+      var na = document.createElement('button');
+      na.type = 'button';
+      na.className = 'na-btn';
+      na.dataset.v = 'na';
+      na.textContent = 'Non utilizzato';
+      el.appendChild(na);
+    }
     el.addEventListener('click', function(e) {
-      var btn = e.target.closest('.rate-btn');
+      var btn = e.target.closest('.rate-btn, .na-btn');
       if (!btn) return;
-      state[key] = parseInt(btn.dataset.v, 10);
-      el.querySelectorAll('.rate-btn').forEach(function(b){ b.classList.remove('active'); });
+      el.querySelectorAll('.rate-btn, .na-btn').forEach(function(b){ b.classList.remove('active'); });
       btn.classList.add('active');
+      var v = btn.dataset.v;
+      state[key] = (v === 'na') ? 'na' : parseInt(v, 10);
     });
   }
   document.querySelectorAll('.rating').forEach(function(el){
-    buildRating(el, el.dataset.q);
+    buildRating(el, el.dataset.q, el.dataset.na === '1');
   });
 
-  // Build NPS (0–10)
+  // ── NPS (0–10) ────────────────────────────────────────
   (function buildNps(){
     var el = document.querySelector('.nps[data-q="nps"]');
     if (!el) return;
@@ -659,7 +729,7 @@ body::before {
     });
   })();
 
-  // Single-choice chips
+  // ── CHIPS (single choice) ─────────────────────────────
   document.querySelectorAll('.chips').forEach(function(group){
     var key = group.dataset.q;
     group.addEventListener('click', function(e){
@@ -668,10 +738,21 @@ body::before {
       state[key] = btn.dataset.v;
       group.querySelectorAll('.chip').forEach(function(b){ b.classList.remove('active'); });
       btn.classList.add('active');
+      // Mostra/Nasconde valutazione DT in base alla scelta
+      if (key === 'dt_usato') {
+        var wrap = document.getElementById('dtRatingWrap');
+        if (btn.dataset.v === 'si') {
+          wrap.style.display = 'block';
+        } else {
+          wrap.style.display = 'none';
+          state.dt_utilita = null;
+          wrap.querySelectorAll('.rate-btn, .na-btn').forEach(function(b){ b.classList.remove('active'); });
+        }
+      }
     });
   });
 
-  // Multi-choice checks
+  // ── CHECKS (multi choice) ─────────────────────────────
   document.querySelectorAll('.checks').forEach(function(group){
     var key = group.dataset.q;
     group.addEventListener('click', function(e){
@@ -684,12 +765,13 @@ body::before {
     });
   });
 
-  // Step navigation helpers
+  // ── NAVIGATION HELPERS ────────────────────────────────
+  var TOTAL_STEPS = 6;
   function showPage(n){
     document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
     var pg = document.getElementById('page' + n);
     if (pg) pg.classList.add('active');
-    for (var i = 1; i <= 5; i++) {
+    for (var i = 1; i <= TOTAL_STEPS; i++) {
       var dot = document.getElementById('s' + i);
       var line = document.getElementById('l' + i);
       if (!dot) continue;
@@ -712,57 +794,53 @@ body::before {
 
   function need(v){ return v === null || v === undefined || v === '' || (Array.isArray(v) && v.length === 0); }
 
-  // Page 1
+  function checkAll(keys, alertId){
+    for (var i = 0; i < keys.length; i++) {
+      if (need(state[keys[i]])) {
+        showAlert(alertId, 'Completate tutte le valutazioni di questa pagina.');
+        return false;
+      }
+    }
+    return true;
+  }
+
   document.getElementById('btnP1').addEventListener('click', function(){
-    state.istruttore = document.getElementById('istruttore').value.trim();
-    if (need(state.anno_nascita)) return showAlert('alert1', 'Indica l\'anno di nascita.');
-    if (need(state.anzianita))    return showAlert('alert1', 'Indica da quanti anni frequenta.');
-    if (need(state.livello))      return showAlert('alert1', 'Seleziona il livello del bambino.');
-    if (need(state.giorni))       return showAlert('alert1', 'Seleziona almeno un giorno di frequenza.');
-    if (need(state.frequenza))    return showAlert('alert1', 'Indica la frequenza settimanale.');
+    if (!checkAll(['info_sito','iscrizione_online','trasparenza_contratto','cert_medico','onboarding','wiki'], 'alert1')) return;
     showPage(2);
   });
-
   document.getElementById('backP2').addEventListener('click', function(){ showPage(1); });
   document.getElementById('btnP2').addEventListener('click', function(){
-    var keys = ['progressi','chiarezza','attenzione','motivazione','rapporto','sicurezza','entusiasmo'];
-    for (var i = 0; i < keys.length; i++) {
-      if (need(state[keys[i]])) return showAlert('alert2', 'Completa tutte le valutazioni di questa pagina.');
-    }
+    var keys = ['qualita_didattica','competenza_istruttori','motivazione','livello_adeguato','rapporto_corsia','progressi','sez_brevetti','evento_brevetti'];
+    if (!checkAll(keys, 'alert2')) return;
+    if (need(state.dt_usato)) return showAlert('alert2', 'Indica se hai usato l\'appuntamento con il Direttore Tecnico.');
+    if (state.dt_usato === 'si' && need(state.dt_utilita)) return showAlert('alert2', 'Valuta l\'utilità dell\'appuntamento con il Direttore Tecnico.');
     showPage(3);
   });
-
   document.getElementById('backP3').addEventListener('click', function(){ showPage(2); });
   document.getElementById('btnP3').addEventListener('click', function(){
-    var keys = ['orari','puntualita','comunicazione','segreteria','iscrizioni','pulizia_piscina','spogliatoi','temperatura','accoglienza'];
-    for (var i = 0; i < keys.length; i++) {
-      if (need(state[keys[i]])) return showAlert('alert3', 'Completa tutte le valutazioni di questa pagina.');
-    }
+    if (!checkAll(['orari','puntualita','proc_recuperi','slot_recuperi','cambi','comunicazioni'], 'alert3')) return;
     showPage(4);
   });
-
   document.getElementById('backP4').addEventListener('click', function(){ showPage(3); });
   document.getElementById('btnP4').addEventListener('click', function(){
-    state.apprezzato = document.getElementById('apprezzato').value.trim();
-    state.migliorare = document.getElementById('migliorare').value.trim();
-    if (need(state.nps))        return showAlert('alert4', 'Indica un punteggio da 0 a 10.');
-    if (need(state.riconferma)) return showAlert('alert4', 'Indica se tornerete a iscrivervi.');
+    if (!checkAll(['portale_uso','app_uso','prenotazioni','pagamenti','nucleo'], 'alert4')) return;
     showPage(5);
   });
-
   document.getElementById('backP5').addEventListener('click', function(){ showPage(4); });
+  document.getElementById('btnP5').addEventListener('click', function(){
+    if (!checkAll(['pulizia_piscina','temperatura','spogliatoi','armadietti','aree_attesa','procedure_accesso','sicurezza'], 'alert5')) return;
+    showPage(6);
+  });
+  document.getElementById('backP6').addEventListener('click', function(){ showPage(5); });
 
   document.getElementById('btnSend').addEventListener('click', function(){
-    state.bimbo_nome   = document.getElementById('bimbo_nome').value.trim();
-    state.bimbo_cognome= document.getElementById('bimbo_cognome').value.trim();
-    state.gen_nome     = document.getElementById('gen_nome').value.trim();
-    state.gen_cognome  = document.getElementById('gen_cognome').value.trim();
-    state.gen_email    = document.getElementById('gen_email').value.trim();
-    state.gen_cel      = document.getElementById('gen_cel').value.trim();
+    state.apprezzato = document.getElementById('apprezzato').value.trim();
+    state.migliorare = document.getElementById('migliorare').value.trim();
 
-    if (state.gen_email && state.gen_email.indexOf('@') < 0) {
-      return showAlert('alert5', 'Inserisci un\'email valida (oppure lascia vuoto).');
-    }
+    if (!checkAll(['desk_cortesia','desk_tempi','qualita_prezzo'], 'alert6')) return;
+    if (need(state.nps))        return showAlert('alert6', 'Indica un punteggio da 0 a 10.');
+    if (need(state.riconferma)) return showAlert('alert6', 'Indica se tornerete a iscrivervi.');
+    if (need(state.ricontatto)) return showAlert('alert6', 'Indica se possiamo ricontattarvi.');
 
     var btn = document.getElementById('btnSend');
     btn.disabled = true;
@@ -770,25 +848,63 @@ body::before {
 
     var payload = {
       stagione: '2025/2026',
-      corso: { nome_bambino: state.bimbo_nome, cognome_bambino: state.bimbo_cognome,
-               anno_nascita: state.anno_nascita, anzianita: state.anzianita,
-               livello: state.livello, giorni: state.giorni, frequenza: state.frequenza,
-               istruttore: state.istruttore },
-      didattica: { progressi: state.progressi, chiarezza: state.chiarezza,
-                   attenzione: state.attenzione, motivazione: state.motivazione,
-                   rapporto_corsia: state.rapporto, sicurezza: state.sicurezza,
-                   entusiasmo: state.entusiasmo },
-      organizzazione: { orari: state.orari, puntualita: state.puntualita,
-                        comunicazione: state.comunicazione, segreteria: state.segreteria,
-                        iscrizioni: state.iscrizioni },
-      strutture: { pulizia_piscina: state.pulizia_piscina, spogliatoi: state.spogliatoi,
-                   temperatura: state.temperatura, accoglienza: state.accoglienza },
-      soddisfazione: { nps: state.nps, riconferma: state.riconferma,
-                       interessi: state.interessi,
-                       apprezzato: state.apprezzato, migliorare: state.migliorare },
-      contatti: { nome: state.gen_nome, cognome: state.gen_cognome,
-                  email: state.gen_email, cellulare: state.gen_cel,
-                  ricontatto: state.ricontatto },
+      iscritto_params: URL_PARAMS,
+      iscrizione: {
+        info_sito: state.info_sito,
+        iscrizione_online: state.iscrizione_online,
+        trasparenza_contratto: state.trasparenza_contratto,
+        cert_medico: state.cert_medico,
+        onboarding: state.onboarding,
+        wiki: state.wiki
+      },
+      didattica: {
+        qualita_didattica: state.qualita_didattica,
+        competenza_istruttori: state.competenza_istruttori,
+        motivazione: state.motivazione,
+        livello_adeguato: state.livello_adeguato,
+        rapporto_corsia: state.rapporto_corsia,
+        progressi: state.progressi,
+        sez_brevetti: state.sez_brevetti,
+        evento_brevetti: state.evento_brevetti,
+        direttore_tecnico: { usato: state.dt_usato, utilita: state.dt_utilita }
+      },
+      organizzazione: {
+        orari: state.orari,
+        puntualita: state.puntualita,
+        proc_recuperi: state.proc_recuperi,
+        slot_recuperi: state.slot_recuperi,
+        cambi: state.cambi,
+        comunicazioni: state.comunicazioni
+      },
+      digitale: {
+        portale_uso: state.portale_uso,
+        app_uso: state.app_uso,
+        prenotazioni: state.prenotazioni,
+        pagamenti: state.pagamenti,
+        nucleo: state.nucleo
+      },
+      strutture: {
+        pulizia_piscina: state.pulizia_piscina,
+        temperatura: state.temperatura,
+        spogliatoi: state.spogliatoi,
+        armadietti: state.armadietti,
+        aree_attesa: state.aree_attesa,
+        procedure_accesso: state.procedure_accesso,
+        sicurezza: state.sicurezza
+      },
+      segreteria: {
+        cortesia: state.desk_cortesia,
+        tempi_risposta: state.desk_tempi,
+        qualita_prezzo: state.qualita_prezzo
+      },
+      soddisfazione: {
+        nps: state.nps,
+        riconferma: state.riconferma,
+        interessi: state.interessi,
+        apprezzato: state.apprezzato,
+        migliorare: state.migliorare,
+        ricontatto: state.ricontatto
+      },
       timestamp: new Date().toISOString(),
       source: 'questionario-fine-stagione-scuola-nuoto-bambini'
     };
@@ -810,7 +926,7 @@ body::before {
     .catch(function(){
       btn.disabled = false;
       btn.innerHTML = 'Invia Questionario';
-      showAlert('alert5', 'Errore nell\'invio. Riprova o contatta lo staff.');
+      showAlert('alert6', 'Errore nell\'invio. Riprova o contatta lo staff.');
     });
   });
 
