@@ -407,6 +407,10 @@ body::before {
         <div class="q-label">L'evento brevetti di fine stagione (diploma, libretto, foto) è ben organizzato<span class="req">*</span></div>
         <div class="rating-wrap"><div class="rating" data-q="evento_brevetti" data-na="1"></div></div>
       </div>
+      <div class="q">
+        <div class="q-label">Le Giornate Genitori &amp; Figli sono organizzate bene e coinvolgenti<span class="req">*</span></div>
+        <div class="rating-wrap"><div class="rating" data-q="genitori_figli" data-na="1"></div></div>
+      </div>
 
       <div class="q">
         <div class="q-label">Avete utilizzato l'appuntamento telefonico con il Direttore Tecnico?<span class="req">*</span></div>
@@ -636,7 +640,7 @@ body::before {
 
     qualita_didattica: null, competenza_istruttori: null, motivazione: null,
     livello_adeguato: null, rapporto_corsia: null, progressi: null,
-    sez_brevetti: null, evento_brevetti: null,
+    sez_brevetti: null, evento_brevetti: null, genitori_figli: null,
     dt_usato: null, dt_utilita: null,
 
     orari: null, puntualita: null, proc_recuperi: null,
@@ -787,7 +791,7 @@ body::before {
   });
   document.getElementById('backP2').addEventListener('click', function(){ showPage(1); });
   document.getElementById('btnP2').addEventListener('click', function(){
-    var keys = ['qualita_didattica','competenza_istruttori','motivazione','livello_adeguato','rapporto_corsia','progressi','sez_brevetti','evento_brevetti'];
+    var keys = ['qualita_didattica','competenza_istruttori','motivazione','livello_adeguato','rapporto_corsia','progressi','sez_brevetti','evento_brevetti','genitori_figli'];
     if (!checkAll(keys, 'alert2')) return;
     if (need(state.dt_usato)) return showAlert('alert2', 'Indica se hai usato l\'appuntamento con il Direttore Tecnico.');
     if (state.dt_usato === 'si' && need(state.dt_utilita)) return showAlert('alert2', 'Valuta l\'utilità dell\'appuntamento con il Direttore Tecnico.');
@@ -842,6 +846,7 @@ body::before {
         progressi: state.progressi,
         sez_brevetti: state.sez_brevetti,
         evento_brevetti: state.evento_brevetti,
+        genitori_figli: state.genitori_figli,
         direttore_tecnico: { usato: state.dt_usato, utilita: state.dt_utilita }
       },
       organizzazione: {
