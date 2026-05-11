@@ -352,10 +352,6 @@ body::before {
         <div class="rating-wrap"><div class="rating" data-q="trasparenza_contratto"></div></div>
       </div>
       <div class="q">
-        <div class="q-label">L'invio del certificato medico (desk@athlonroma.it) è stato semplice<span class="req">*</span></div>
-        <div class="rating-wrap"><div class="rating" data-q="cert_medico" data-na="1"></div></div>
-      </div>
-      <div class="q">
         <div class="q-label">L'accoglienza e l'onboarding al primo giorno (badge, info pratiche) sono stati ben organizzati<span class="req">*</span></div>
         <div class="rating-wrap"><div class="rating" data-q="onboarding"></div></div>
       </div>
@@ -449,10 +445,6 @@ body::before {
       <div class="q">
         <div class="q-label">La procedura per cancellare una lezione e prenotare il recupero è chiara<span class="req">*</span></div>
         <div class="rating-wrap"><div class="rating" data-q="proc_recuperi" data-na="1"></div></div>
-      </div>
-      <div class="q">
-        <div class="q-label">La gestione dei cambi di gruppo o orario è efficiente<span class="req">*</span></div>
-        <div class="rating-wrap"><div class="rating" data-q="cambi" data-na="1"></div></div>
       </div>
       <div class="q">
         <div class="q-label">Le comunicazioni durante la stagione (avvisi, email) sono tempestive<span class="req">*</span></div>
@@ -636,7 +628,7 @@ body::before {
   // ── STATE ─────────────────────────────────────────────
   var state = {
     info_sito: null, iscrizione_online: null, trasparenza_contratto: null,
-    cert_medico: null, onboarding: null, wiki: null,
+    onboarding: null, wiki: null,
 
     qualita_didattica: null, competenza_istruttori: null, motivazione: null,
     livello_adeguato: null, rapporto_corsia: null, progressi: null,
@@ -644,7 +636,7 @@ body::before {
     dt_usato: null, dt_utilita: null,
 
     orari: null, puntualita: null, proc_recuperi: null,
-    cambi: null, comunicazioni: null,
+    comunicazioni: null,
 
     portale_uso: null, app_uso: null, prenotazioni: null, pagamenti: null, nucleo: null,
 
@@ -786,7 +778,7 @@ body::before {
   }
 
   document.getElementById('btnP1').addEventListener('click', function(){
-    if (!checkAll(['info_sito','iscrizione_online','trasparenza_contratto','cert_medico','onboarding','wiki'], 'alert1')) return;
+    if (!checkAll(['info_sito','iscrizione_online','trasparenza_contratto','onboarding','wiki'], 'alert1')) return;
     showPage(2);
   });
   document.getElementById('backP2').addEventListener('click', function(){ showPage(1); });
@@ -799,7 +791,7 @@ body::before {
   });
   document.getElementById('backP3').addEventListener('click', function(){ showPage(2); });
   document.getElementById('btnP3').addEventListener('click', function(){
-    if (!checkAll(['orari','puntualita','proc_recuperi','cambi','comunicazioni'], 'alert3')) return;
+    if (!checkAll(['orari','puntualita','proc_recuperi','comunicazioni'], 'alert3')) return;
     showPage(4);
   });
   document.getElementById('backP4').addEventListener('click', function(){ showPage(3); });
@@ -833,7 +825,6 @@ body::before {
         info_sito: state.info_sito,
         iscrizione_online: state.iscrizione_online,
         trasparenza_contratto: state.trasparenza_contratto,
-        cert_medico: state.cert_medico,
         onboarding: state.onboarding,
         wiki: state.wiki
       },
@@ -853,7 +844,6 @@ body::before {
         orari: state.orari,
         puntualita: state.puntualita,
         proc_recuperi: state.proc_recuperi,
-        cambi: state.cambi,
         comunicazioni: state.comunicazioni
       },
       digitale: {
